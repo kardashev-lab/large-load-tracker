@@ -181,7 +181,8 @@ export default async function HomePage() {
               <Term def="A standalone project that needs its own new connection to the grid, built from scratch.">
                 standalone
               </Term>{" "}
-              MW, monthly. The gap in the line is real. ERCOT didn&apos;t publish anything those months.
+              MW, monthly. Every break in the line is real: ERCOT&apos;s committee didn&apos;t meet or
+              publish a deck those months. It only met about once a month, not every month.
             </div>
           </div>
         </div>

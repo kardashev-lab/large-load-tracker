@@ -36,9 +36,11 @@ export default function MethodologyPage() {
             decks say, we go back and check the original PDF before trusting it.
           </p>
           <p className="section-desc">
-            <strong>There&apos;s a real gap in the data.</strong> Nobody posted this deck between October
-            2024 and January 2026. We show that as a break in the chart. We don&apos;t guess at what
-            happened during the gap.
+            <strong>There are real gaps in the data.</strong> The committee didn&apos;t meet or post this
+            deck every single month, especially in the earlier LFLTF era, so several months are missing
+            throughout the history, plus one big gap between October 2024 and January 2026 where nobody
+            posted anything for over a year. We show every one of these as a break in the chart. We
+            don&apos;t guess at what happened in between.
           </p>
         </div>
       </section>
