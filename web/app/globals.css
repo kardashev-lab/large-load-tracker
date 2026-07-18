@@ -115,24 +115,23 @@ a { color: inherit; }
 .site-nav-item:has(a.active) .site-nav-hint { color: var(--ink-soft); }
 
 .site-nav-hint {
+  display: none;
   font-size: 10px;
   color: var(--muted);
-  padding: 0 14px 6px;
+  padding: 4px 10px;
   white-space: nowrap;
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
   text-align: center;
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-top: none;
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.1s ease;
+  z-index: 10;
 }
-.site-nav-item:hover .site-nav-hint { opacity: 1; visibility: visible; }
+.site-nav-item:hover .site-nav-hint { display: block; }
 
 .footer {
   margin-top: 56px;
