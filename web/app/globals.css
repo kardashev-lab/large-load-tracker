@@ -486,8 +486,8 @@ a { color: inherit; }
 .term:hover .term-tip, .term:focus .term-tip, .term:focus-visible .term-tip { display: block; }
 
 /* ── Estimate form ─────────────────────────────────────── */
-.estimate-form { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 16px; align-items: end; }
-.estimate-field { display: flex; flex-direction: column; gap: 6px; }
+.estimate-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 16px; align-items: end; }
+.estimate-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 
 .estimate-label {
   font-family: var(--font-mono);
@@ -499,6 +499,8 @@ a { color: inherit; }
 }
 
 .estimate-select, .estimate-input {
+  width: 100%;
+  min-width: 0;
   background-color: var(--surface);
   border: 1px solid var(--ink);
   color: var(--ink);
