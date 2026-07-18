@@ -1,17 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-sans",
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
@@ -87,37 +82,42 @@ const NAV = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body>
+    <html lang="en" className={`${sourceSans.variable} h-full`}>
+      <body className="min-h-full antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <div className="page">
           <header className="site-header">
-            <Link href="/" className="site-brand">
-              <span className="site-brand-mark">Large Load Tracker</span>
-              <span className="site-brand-sub">ERCOT</span>
-            </Link>
-            <nav className="site-nav">
-              {NAV.map((item) => (
-                <div key={item.href} className="site-nav-item">
-                  <Link href={item.href}>{item.label}</Link>
-                  <span className="site-nav-hint">{item.hint}</span>
-                </div>
-              ))}
-            </nav>
+            <div className="site-header-inner">
+              <Link href="/" className="site-brand">
+                <Image src="/images/ercot.png" alt="" width={22} height={22} className="shrink-0" />
+                <span className="site-brand-mark">Large Load Tracker</span>
+                <span className="site-brand-sub">ERCOT</span>
+              </Link>
+              <nav className="site-nav">
+                {NAV.map((item) => (
+                  <div key={item.href} className="site-nav-item">
+                    <Link href={item.href}>{item.label}</Link>
+                    <span className="site-nav-hint">{item.hint}</span>
+                  </div>
+                ))}
+              </nav>
+            </div>
           </header>
-          {children}
-          <footer className="footer">
-            <span>
-              A <a href="https://kardashevlabs.org">Kardashev Labs</a> tool. Data from ERCOT public
-              committee filings.
-            </span>
-            <span>
-              <a href="/methodology">How this is built</a>
-            </span>
-          </footer>
+          <div className="wrap">
+            {children}
+            <footer className="footer">
+              <span>
+                A <a href="https://kardashevlabs.org">Kardashev Labs</a> tool. Data from ERCOT public
+                committee filings.
+              </span>
+              <span>
+                <a href="/methodology">How this is built</a>
+              </span>
+            </footer>
+          </div>
         </div>
       </body>
     </html>

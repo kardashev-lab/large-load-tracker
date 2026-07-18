@@ -16,21 +16,23 @@ function CustomTooltip({ active, payload, label }: any) {
   return (
     <div
       style={{
-        background: "var(--surface-raised)",
-        border: "1px solid var(--border)",
+        background: "#fff",
+        border: "1px solid #eaeaea",
+        borderRadius: 6,
         padding: "10px 12px",
         fontSize: 12,
-        fontFamily: "var(--font-mono)",
+        fontFamily: "var(--font-sans)",
+        boxShadow: "0 8px 24px rgba(47,52,55,0.12)",
       }}
     >
-      <div style={{ color: "var(--text-muted)", marginBottom: 6 }}>{monthLabel(label)}</div>
-      <div style={{ color: "var(--text)" }}>
+      <div style={{ color: "#6b6863", marginBottom: 6 }}>{monthLabel(label)}</div>
+      <div style={{ color: "#2f3437", fontWeight: 600 }}>
         {(colocated + standalone).toLocaleString("en-US", { maximumFractionDigits: 0 })} MW total
       </div>
-      <div style={{ color: "var(--text-secondary)" }}>
+      <div style={{ color: "#5f5c58" }}>
         {standalone.toLocaleString("en-US", { maximumFractionDigits: 0 })} standalone
       </div>
-      <div style={{ color: "var(--amber)" }}>
+      <div style={{ color: "#d3801a" }}>
         {colocated.toLocaleString("en-US", { maximumFractionDigits: 0 })} co-located
       </div>
     </div>
@@ -47,27 +49,27 @@ export function QueueGrowthChart({ points }: { points: Point[] }) {
         <AreaChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="standaloneFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#a3a3a0" stopOpacity={0.35} />
-              <stop offset="100%" stopColor="#a3a3a0" stopOpacity={0.02} />
+              <stop offset="0%" stopColor="#787774" stopOpacity={0.25} />
+              <stop offset="100%" stopColor="#787774" stopOpacity={0.02} />
             </linearGradient>
             <linearGradient id="colocatedFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ffb020" stopOpacity={0.5} />
+              <stop offset="0%" stopColor="#ffb020" stopOpacity={0.45} />
               <stop offset="100%" stopColor="#ffb020" stopOpacity={0.05} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="#1a1a1a" vertical={false} />
+          <CartesianGrid stroke="#eaeaea" vertical={false} />
           <XAxis
             dataKey="month"
             tickFormatter={monthLabel}
-            stroke="#6b6b68"
-            tick={{ fontSize: 11, fontFamily: "var(--font-mono)" }}
+            stroke="#6b6863"
+            tick={{ fontSize: 11, fontFamily: "var(--font-sans)" }}
             tickLine={false}
-            axisLine={{ stroke: "#262626" }}
+            axisLine={{ stroke: "#eaeaea" }}
             minTickGap={40}
           />
           <YAxis
-            stroke="#6b6b68"
-            tick={{ fontSize: 11, fontFamily: "var(--font-mono)" }}
+            stroke="#6b6863"
+            tick={{ fontSize: 11, fontFamily: "var(--font-sans)" }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
@@ -78,7 +80,7 @@ export function QueueGrowthChart({ points }: { points: Point[] }) {
             type="monotone"
             dataKey="standalone"
             stackId="1"
-            stroke="#a3a3a0"
+            stroke="#9a9793"
             fill="url(#standaloneFill)"
             strokeWidth={1.5}
           />
@@ -86,7 +88,7 @@ export function QueueGrowthChart({ points }: { points: Point[] }) {
             type="monotone"
             dataKey="colocated"
             stackId="1"
-            stroke="#ffb020"
+            stroke="#d3801a"
             fill="url(#colocatedFill)"
             strokeWidth={1.5}
           />

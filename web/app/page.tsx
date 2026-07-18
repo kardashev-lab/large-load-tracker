@@ -120,17 +120,40 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="hero">
-        <span className="eyebrow">ERCOT · Updated monthly</span>
-        <h1 className="hero-title">
-          Can this site get power in ERCOT, and <span className="amber">roughly when?</span>
-        </h1>
-        <p className="hero-desc">
-          We track ERCOT&apos;s data center, crypto, and industrial power queue back to{" "}
-          {formatDate(sorted[0].snapshot_month)}. Real timelines, real prices, real numbers. This is what
-          already happened, not a prediction of what will.
-        </p>
-      </section>
+      <header className="hero">
+        <div className="hero-bg" />
+        <div className="hero-inner">
+          <div className="hero-top">
+            <div className="hero-copy">
+              <span className="eyebrow">ERCOT · Updated monthly</span>
+              <h1 className="hero-title">
+                Can this site get power in ERCOT, and <span className="amber">roughly when?</span>
+              </h1>
+              <p className="hero-desc">
+                We track ERCOT&apos;s data center, crypto, and industrial power queue back to{" "}
+                {formatDate(sorted[0].snapshot_month)}. Real timelines, real prices, real numbers. This
+                is what already happened, not a prediction of what will.
+              </p>
+            </div>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <span className="font-label">Tracked load</span>
+                <span className="hero-stat-value">{formatMW(latest.total_mw)}</span>
+              </div>
+              <div className="hero-stat">
+                <span className="font-label">Data center share</span>
+                <span className="hero-stat-value">
+                  {dataCenterType ? `${dataCenterType.pct.toFixed(0)}%` : "—"}
+                </span>
+              </div>
+              <div className="hero-stat">
+                <span className="font-label">Months tracked</span>
+                <span className="hero-stat-value">{sorted.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
       <div className="start-here">
         <div className="start-here-text">
