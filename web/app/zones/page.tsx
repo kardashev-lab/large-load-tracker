@@ -40,11 +40,9 @@ export default async function ZonesPage() {
         <span className="eyebrow">By zone</span>
         <h1 className="hero-title">Which zones can actually absorb this load</h1>
         <p className="hero-desc">
-          Three datasets, three granularities, combined honestly rather than forced together: the
-          large-load queue&apos;s own coarse west/north/other split, generator-side interconnection
-          timelines at full CDR-zone granularity, and an LMP-derived price stress proxy at the
-          settlement-point level. The grade on each card is a transparent average rank — formula
-          printed on every card, no hidden weighting.
+          Each card mixes three different datasets. We don&apos;t force them to line up when they
+          don&apos;t. The grade is a simple average rank. The formula is printed right on the card, no
+          black box.
         </p>
       </section>
 
@@ -57,10 +55,9 @@ export default async function ZonesPage() {
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          These are three different zone taxonomies that don&apos;t map 1:1 — ERCOT&apos;s load-side
-          reporting, generator-side CDR reporting zones, and settlement-point pricing zones all carve
-          up the grid differently. Where a card says a dataset doesn&apos;t apply, that&apos;s a real
-          granularity mismatch, not a missing-data bug. See <a href="/methodology">methodology</a>.
+          ERCOT splits the grid into zones differently depending on the dataset. They don&apos;t always
+          line up. When a card says a number isn&apos;t available, that&apos;s real, not a bug. See{" "}
+          <a href="/methodology">methodology</a>.
         </span>
       </div>
     </>

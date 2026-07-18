@@ -16,19 +16,18 @@ export default function BatchZeroPage() {
         <span className="eyebrow">Batch Zero</span>
         <h1 className="hero-title">ERCOT&apos;s first large-load batch, explained</h1>
         <p className="hero-desc">
-          ERCOT is the first grid operator in the country to approve large-load connection requests in
-          batches rather than one at a time. Batch Zero is the first group to go through it. Here&apos;s what
-          it actually is, sourced from ERCOT&apos;s own filings, not secondhand summaries.
+          ERCOT is the first grid operator in the country to approve large loads in batches instead of one
+          at a time. Batch Zero is the first group to go through it. Here&apos;s what it actually is,
+          straight from ERCOT&apos;s own filings.
         </p>
       </section>
 
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          As of the deck this queue history was extracted from, ERCOT reported more than 438,000 MW of
-          large-load connection requests — nearly 90% from data centers — against an all-time system peak
-          demand record of 85,508 MW (Aug 10, 2023). That gap between requested and physically deliverable
-          load is the entire reason Batch Zero exists.
+          ERCOT has more than 438,000 MW of large-load requests on file. Almost 90% of that is data
+          centers. The state&apos;s all-time peak demand record is 85,508 MW. That gap between what&apos;s
+          requested and what the grid can actually deliver is why Batch Zero exists.
         </span>
       </div>
 
@@ -38,17 +37,16 @@ export default function BatchZeroPage() {
         </div>
         <div className="panel">
           <p className="section-desc" style={{ marginBottom: 10 }}>
-            ERCOT studied large-load interconnection requests one at a time for years. As requests piled up,
-            each new large project could invalidate studies already done for projects further along in the
-            queue, triggering costly restudies and delays. Batch Zero replaces that with a system-wide study:
-            ERCOT evaluates all eligible large loads together, in one coordinated pass, and produces a single
-            transmission plan for what the grid can actually support.
+            ERCOT used to study each large-load request on its own. As requests piled up, every new
+            project could break the studies already done for projects ahead of it in line. That meant
+            expensive restudies and delays. Batch Zero fixes this by studying everyone at once. ERCOT looks
+            at every eligible project together and builds one transmission plan for what the grid can
+            actually support.
           </p>
           <p className="section-desc">
-            Senate Bill 6 (signed 2025, effective immediately) is the statutory basis: it directs the PUCT to
-            set new interconnection standards, cost-sharing rules, and curtailment programs for loads with
-            75+ MW of single-site peak demand. PGRR145 (the study process) and NPRR1325 (the market rules)
-            are how ERCOT implemented that direction.
+            Senate Bill 6, signed in 2025, is the law behind this. It tells the PUCT to set new
+            interconnection rules, cost-sharing rules, and curtailment programs for any load over 75 MW.
+            PGRR145 and NPRR1325 are how ERCOT turned that into an actual process.
           </p>
         </div>
       </div>
@@ -56,7 +54,7 @@ export default function BatchZeroPage() {
       <div className="section">
         <div className="section-head">
           <div className="section-title">Timeline</div>
-          <div className="section-desc">Primary source where available; secondary/unconfirmed dates flagged plainly.</div>
+          <div className="section-desc">Sourced from ERCOT where we can. Unconfirmed dates are flagged.</div>
         </div>
         <div className="panel">
           <div className="timeline-list">
@@ -102,7 +100,7 @@ export default function BatchZeroPage() {
       <div className="section">
         <div className="section-head">
           <div className="section-title">Optional connection pathways</div>
-          <div className="section-desc">Ways to connect faster by reducing pressure on the transmission grid.</div>
+          <div className="section-desc">Two ways to connect faster, if you ease pressure on the grid.</div>
         </div>
         <div className="panel">
           <div className="bar-list">
@@ -118,8 +116,8 @@ export default function BatchZeroPage() {
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          This page is manually maintained, not auto-generated from the deck backfill — check dates against
-          ERCOT&apos;s own postings before relying on them for a filing deadline. See{" "}
+          We update this page by hand, it isn&apos;t pulled from the deck data automatically. Double-check
+          any filing deadline against ERCOT&apos;s own site before you rely on it. See{" "}
           <a href="/methodology">methodology</a> for how the rest of this site&apos;s numbers are sourced.
         </span>
       </div>

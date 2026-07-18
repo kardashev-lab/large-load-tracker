@@ -27,9 +27,9 @@ export default async function EstimatePage() {
         <span className="eyebrow">Estimate</span>
         <h1 className="hero-title">Ahead of you in line</h1>
         <p className="hero-desc">
-          Pick a zone, size, and load type. Everything below is arithmetic on published ERCOT data — current
-          queue depth, historical approval pace, and measured generator-side timelines used as the best available
-          analog. Not a forecast, not a promise.
+          Pick your zone, size, and load type. We&apos;ll do simple math on real ERCOT numbers: how many
+          projects are ahead of you, how fast ERCOT has been approving loads, and how long similar
+          projects have taken. Not a forecast. Not a promise.
         </p>
       </section>
 

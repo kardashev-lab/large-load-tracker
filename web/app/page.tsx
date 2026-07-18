@@ -126,10 +126,9 @@ export default async function HomePage() {
           Can this site get power in ERCOT, and <span className="amber">roughly when?</span>
         </h1>
         <p className="hero-desc">
-          Large-load (data center / crypto / industrial) interconnection queue history, reconstructed
-          from ERCOT&apos;s monthly committee decks back to {formatDate(sorted[0].snapshot_month)}, plus
-          measured generator-side timelines and a zone-level congestion proxy. Descriptive arithmetic
-          from published data — not a forecast.
+          We track ERCOT&apos;s data center, crypto, and industrial power queue back to{" "}
+          {formatDate(sorted[0].snapshot_month)}. Real timelines, real prices, real numbers. This is what
+          already happened, not a prediction of what will.
         </p>
       </section>
 
@@ -137,8 +136,8 @@ export default async function HomePage() {
         <div className="start-here-text">
           <div className="start-here-label">New here?</div>
           <div className="start-here-desc">
-            Don&apos;t need to read grid jargon to get an answer. Tell us your project&apos;s size and
-            location and we&apos;ll show you where it stands.
+            No jargon required. Tell us your project&apos;s size and location. We&apos;ll show you where it
+            stands.
           </div>
         </div>
         <Link href="/estimate" className="start-here-cta">
@@ -160,8 +159,7 @@ export default async function HomePage() {
               <Term def="A standalone project that needs its own new connection to the grid, built from scratch.">
                 standalone
               </Term>{" "}
-              MW, monthly. Break in the line is a disclosed gap in ERCOT&apos;s own reporting, not missing
-              data.
+              MW, monthly. The gap in the line is real. ERCOT didn&apos;t publish anything those months.
             </div>
           </div>
         </div>
@@ -236,10 +234,9 @@ export default async function HomePage() {
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          ERCOT does not publish project-level large-load data. These figures are chart-level
-          aggregates extracted from committee slide decks (vision extraction, cross-validated across
-          overlapping decks). See <a href="/methodology">methodology</a> for what this data can and
-          cannot say.
+ERCOT doesn&apos;t share project-level data. These numbers come from committee slide decks, read
+          and cross-checked by hand. See <a href="/methodology">methodology</a> for what we can and
+          can&apos;t say.
         </span>
       </div>
     </>

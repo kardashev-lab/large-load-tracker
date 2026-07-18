@@ -19,7 +19,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
         <span className="zone-stat-value mono">{formatMW(data.loadMW)}</span>
       </div>
       {data.loadIsShared && (
-        <div className="zone-note">Not broken out separately — combined into ERCOT&apos;s &quot;Other&quot; bucket.</div>
+        <div className="zone-note">ERCOT doesn&apos;t break this zone out on its own. It&apos;s lumped into &quot;Other.&quot;</div>
       )}
 
       <div className="zone-section-label">
@@ -82,7 +82,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
         <>
           <div className="zone-stat-row">
             <span className="zone-stat-label">
-              <Term def="Share of 15-minute periods in the past 12 months where wholesale power cost more than $100/MWh — a sign the local grid was strained.">
+              <Term def="Share of 15-minute periods in the past 12 months where wholesale power cost more than $100/MWh. A sign the local grid was strained.">
                 Expensive hours
               </Term>
             </span>
@@ -90,7 +90,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
           </div>
           <div className="zone-stat-row">
             <span className="zone-stat-label">
-              <Term def="Share of 15-minute periods where power prices went below $0 — a sign of too much local generation (usually wind/solar) and not enough demand to soak it up.">
+              <Term def="Share of 15-minute periods where power prices went below $0. Usually means too much wind and solar for the local demand to soak up.">
                 Oversupplied hours
               </Term>
             </span>
@@ -99,11 +99,11 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
           <ZoneStressSpark months={months} />
         </>
       ) : (
-        <div className="zone-note">No price data available for this specific zone.</div>
+        <div className="zone-note">No price data for this zone.</div>
       )}
 
       <div className="zone-formula">
-        Grade = average rank across {data.gradeInputs.length} of 3 factors ({data.gradeInputs.map((g) => g.label).join(", ")}). No hidden weighting — every input above feeds directly into the grade.
+        Grade is the average rank across {data.gradeInputs.length} of 3 factors ({data.gradeInputs.map((g) => g.label).join(", ")}). Every number above feeds directly into it. Nothing hidden.
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { month } = await params;
   return {
-    title: `State of ERCOT Large Load — ${monthLabel(`${month}-01`)} | Kardashev Labs`,
+    title: `State of ERCOT Large Load: ${monthLabel(`${month}-01`)} | Kardashev Labs`,
     description: `Monthly ERCOT large-load queue summary for ${monthLabel(`${month}-01`)}: what changed, notable status movements, and the reality gap.`,
   };
 }
@@ -43,8 +43,8 @@ export default async function ReportMonthPage({ params }: { params: Promise<{ mo
         <span className="eyebrow">State of ERCOT Large Load</span>
         <h1 className="hero-title">{monthLabel(targetMonth)}</h1>
         <p className="hero-desc">
-          Auto-generated from the {formatDate(snapshot.report_date)} LLWG deck. Permalinked — this page won&apos;t
-          change after the fact.
+          Built automatically from the {formatDate(snapshot.report_date)} deck. This page is a permanent
+          link. It won&apos;t change later.
         </p>
       </section>
 
@@ -107,8 +107,8 @@ export default async function ReportMonthPage({ params }: { params: Promise<{ mo
           ) : (
             <div className="section-desc">
               {mom
-                ? "No status categories matched cleanly against the prior month — ERCOT changed its status taxonomy between these two decks, so a like-for-like comparison isn't available."
-                : "No prior-month snapshot available to compare against (this month follows a reporting gap or is the first in the series)."}
+                ? "Can't compare to last month. ERCOT changed its category names between these two decks."
+                : "No prior month to compare against. This is either the first month we have, or it follows a gap in reporting."}
             </div>
           )}
           <div className="source-line">
@@ -124,8 +124,8 @@ export default async function ReportMonthPage({ params }: { params: Promise<{ mo
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          Auto-generated, not editorialized. See <a href="/">overview</a> for the full history and{" "}
-          <a href="/methodology">methodology</a> for how these numbers are extracted and validated.
+          This page is generated automatically. Nobody edits it by hand. See <a href="/">overview</a> for
+          the full history and <a href="/methodology">methodology</a> for how we get these numbers.
         </span>
       </div>
     </>

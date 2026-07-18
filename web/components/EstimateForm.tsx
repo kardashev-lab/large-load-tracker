@@ -115,7 +115,7 @@ export function EstimateForm({
 
           <div className="estimate-result-row">
             <span className="zone-stat-label">
-              <Term def="Not specific to this zone — ERCOT doesn't publish a per-zone version of this number, so this is the whole-grid rate.">
+              <Term def="Not specific to this zone. ERCOT doesn't publish a per-zone version of this number, so this is the whole-grid rate.">
                 How fast ERCOT approves loads, grid-wide
               </Term>
             </span>
@@ -129,17 +129,17 @@ export function EstimateForm({
           {yearsAtMedianPace != null && (
             <>
               <div className="estimate-headline">
-                At the median observed approval pace, the {zone.label} queue alone would take{" "}
-                <span className="amber">~{yearsAtMedianPace.toFixed(0)} years</span> to clear if nothing else were
-                added to it.
+                At the typical pace, the {zone.label} queue alone would take{" "}
+                <span className="amber">~{yearsAtMedianPace.toFixed(0)} years</span> to clear, if nothing else
+                got added.
               </div>
               <div className="zone-note">
-                Pace varies a lot month to month: {Math.round(throughput.minMWPerMonth!).toLocaleString("en-US")}
-                –{Math.round(throughput.maxMWPerMonth!).toLocaleString("en-US")} MW in a single month across the{" "}
-                {throughput.sampleMonths} months with an observed increase (
-                {yearsAtFastestPace!.toFixed(0)}–{yearsAtSlowestPace!.toFixed(0)} yr at those extremes) —{" "}
-                {throughput.flatOrRestatedMonths} additional months showed no change or a downward restatement,
-                excluded from the pace calculation.
+                The pace swings a lot month to month: as low as{" "}
+                {Math.round(throughput.minMWPerMonth!).toLocaleString("en-US")} MW and as high as{" "}
+                {Math.round(throughput.maxMWPerMonth!).toLocaleString("en-US")} MW in a single month, across the{" "}
+                {throughput.sampleMonths} months that actually grew ({yearsAtFastestPace!.toFixed(0)} to{" "}
+                {yearsAtSlowestPace!.toFixed(0)} years at those two extremes). {throughput.flatOrRestatedMonths}{" "}
+                other months showed no change or a drop, so we left them out of the pace calculation.
               </div>
             </>
           )}
@@ -178,10 +178,9 @@ export function EstimateForm({
           )}
 
           <div className="zone-formula">
-            Descriptive arithmetic from published data, not a forecast. Approval throughput is ERCOT system-wide
-            (a consistent zone-level approvals series isn&apos;t published); the generator-side timeline is a
-            different queue (generation, not large load) used as the best available measured analog. See{" "}
-            <a href="/methodology">methodology</a>.
+            This is math on published data, not a forecast. The approval pace is grid-wide, ERCOT doesn&apos;t
+            publish it by zone. The timeline comes from a different queue (power plants, not large loads),
+            used as the closest real stand-in we have. See <a href="/methodology">methodology</a>.
           </div>
         </div>
       )}
