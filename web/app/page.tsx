@@ -1,0 +1,222 @@
+export const dynamic = "force-dynamic";
+
+import { fetchLargeLoadHistory, checkApiHealth } from "@/lib/api";
+import { StatGrid, type Stat } from "@/components/StatGrid";
+import { QueueGrowthChart } from "@/components/QueueGrowthChart";
+import { BreakdownBars } from "@/components/BreakdownBars";
+import { formatDate, formatMW, formatDelta } from "@/lib/format";
+
+const TYPE_LABELS: Record<string, string> = {
+  data_center: "Data center",
+  crypto: "Crypto",
+  industrial: "Industrial",
+  data_center_crypto: "Data center / crypto",
+  hydrogen: "Hydrogen",
+  not_specified: "Not specified",
+  none: "Not specified",
+};
+
+const SIZE_LABELS: Record<string, string> = {
+  "75_250mw": "75–250 MW",
+  "250_500mw": "250–500 MW",
+  "500_1000mw": "500–1,000 MW",
+  "1000mw_plus": "1,000+ MW",
+};
+
+export default async function HomePage() {
+  const [history, apiUp] = await Promise.all([fetchLargeLoadHistory(), checkApiHealth()]);
+
+  if (!apiUp || !history.length) {
+    return (
+      <>
+        <div className="api-error">Data API is unreachable right now. Try again shortly.</div>
+      </>
+    );
+  }
+
+  const sorted = [...history].sort((a, b) => a.snapshot_month.localeCompare(b.snapshot_month));
+  const latest = sorted[sorted.length - 1];
+  const prevMonth = sorted[sorted.length - 2] ?? null;
+
+  // Year-over-year: find a snapshot ~12 months before latest, if the (disclosed) coverage gap allows it.
+  const latestDate = new Date(`${latest.snapshot_month}T00:00:00`);
+  const yoyTarget = new Date(latestDate);
+  yoyTarget.setMonth(yoyTarget.getMonth() - 12);
+  const yoySnap =
+    sorted.find((s) => s.snapshot_month === yoyTarget.toISOString().slice(0, 8) + "01") ?? null;
+
+  // Chart points, with an explicit null-gap point inserted wherever consecutive
+  // snapshots are more than one calendar month apart, so the chart breaks
+  // instead of implying smooth growth across the disclosed Oct 2024-Jan 2026 gap.
+  const chartPoints: { month: string; colocated: number | null; standalone: number | null }[] = [];
+  for (let i = 0; i < sorted.length; i++) {
+    const cur = sorted[i];
+    if (i > 0) {
+      const prev = sorted[i - 1];
+      const prevDate = new Date(`${prev.snapshot_month}T00:00:00`);
+      const curDate = new Date(`${cur.snapshot_month}T00:00:00`);
+      const monthsApart =
+        (curDate.getFullYear() - prevDate.getFullYear()) * 12 + (curDate.getMonth() - prevDate.getMonth());
+      if (monthsApart > 1) {
+        const gapDate = new Date(prevDate);
+        gapDate.setMonth(gapDate.getMonth() + 1);
+        chartPoints.push({
+          month: gapDate.toISOString().slice(0, 7) + "-01",
+          colocated: null,
+          standalone: null,
+        });
+      }
+    }
+    chartPoints.push({
+      month: cur.snapshot_month,
+      colocated: cur.colocated_mw,
+      standalone: cur.standalone_mw,
+    });
+  }
+
+  const dataCenterType = latest.by_type?.["data_center"] as { mw: number; pct: number } | undefined;
+  const colocatedPct = latest.total_mw ? (latest.colocated_mw ?? 0) / latest.total_mw : null;
+
+  const stats: Stat[] = [
+    { label: "Tracked large load", value: formatMW(latest.total_mw) },
+    {
+      label: "Month over month",
+      value: formatDelta(latest.total_mw, prevMonth?.total_mw ?? null) ?? "—",
+      tone:
+        prevMonth && latest.total_mw != null && prevMonth.total_mw != null && latest.total_mw < prevMonth.total_mw
+          ? "down"
+          : "up",
+    },
+    {
+      label: "Year over year",
+      value: yoySnap ? formatDelta(latest.total_mw, yoySnap.total_mw) ?? "—" : "n/a (gap)",
+      sub: !yoySnap ? "no snapshot 12mo back" : undefined,
+    },
+    {
+      label: "Data center share",
+      value: dataCenterType ? `${dataCenterType.pct.toFixed(1)}%` : "—",
+      sub: colocatedPct != null ? `${(colocatedPct * 100).toFixed(1)}% co-located` : undefined,
+      tone: "neutral",
+    },
+  ];
+
+  const observedEnergized = (latest.by_status?.["observed_energized"] as number | undefined) ?? null;
+  const approvedToEnergize = latest.approved_to_energize_mw;
+  const realityRatio =
+    approvedToEnergize && observedEnergized != null ? observedEnergized / approvedToEnergize : null;
+
+  const typeRows = latest.by_type
+    ? Object.entries(latest.by_type as Record<string, { mw: number; pct: number }>)
+        .map(([k, v]) => ({ label: TYPE_LABELS[k] ?? k, mw: v.mw }))
+        .sort((a, b) => b.mw - a.mw)
+    : [];
+
+  const sizeRows = latest.by_size_bucket
+    ? Object.entries(latest.by_size_bucket as Record<string, { mw: number; count: number }>)
+        .map(([k, v]) => ({ label: SIZE_LABELS[k] ?? k, mw: v.mw }))
+    : [];
+
+  return (
+    <>
+      <section className="hero">
+        <span className="eyebrow">ERCOT · Updated monthly</span>
+        <h1 className="hero-title">
+          Can this site get power in ERCOT, and <span className="amber">roughly when?</span>
+        </h1>
+        <p className="hero-desc">
+          Large-load (data center / crypto / industrial) interconnection queue history, reconstructed
+          from ERCOT&apos;s monthly committee decks back to {formatDate(sorted[0].snapshot_month)}, plus
+          measured generator-side timelines and a zone-level congestion proxy. Descriptive arithmetic
+          from published data — not a forecast.
+        </p>
+      </section>
+
+      <StatGrid stats={stats} />
+
+      <section className="section">
+        <div className="section-head">
+          <div>
+            <div className="section-title">Large load queue, tracked history</div>
+            <div className="section-desc">
+              Co-located vs. standalone MW, monthly. Break in the line is a disclosed gap in ERCOT&apos;s
+              own reporting, not missing data.
+            </div>
+          </div>
+        </div>
+        <div className="panel">
+          <QueueGrowthChart points={chartPoints} />
+          <div className="source-line">
+            Source: ERCOT LLWG / LFLTF committee decks, {sorted.length} monthly snapshots,{" "}
+            {formatDate(sorted[0].snapshot_month)}–{formatDate(latest.snapshot_month)}. Latest:{" "}
+            <a href={latest.source_url ?? "#"} target="_blank" rel="noreferrer">
+              deck of {formatDate(latest.report_date)}
+            </a>
+            .
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <div>
+            <div className="section-title">The reality gap</div>
+            <div className="section-desc">
+              How much of the load ERCOT has approved to energize is actually observed as real
+              consumption.
+            </div>
+          </div>
+        </div>
+        <div className="gap-grid">
+          <div className="gap-cell">
+            <div className="gap-cell-label">Approved to energize</div>
+            <div className="gap-cell-value">{formatMW(approvedToEnergize)}</div>
+            <div className="gap-cell-sub">Cumulative, ERCOT-approved</div>
+          </div>
+          <div className="gap-cell">
+            <div className="gap-cell-label">Observed energized</div>
+            <div className="gap-cell-value amber">{formatMW(observedEnergized)}</div>
+            <div className="gap-cell-sub">
+              {realityRatio != null
+                ? `${(realityRatio * 100).toFixed(0)}% of approved load is actually showing up`
+                : "Not broken out in this month's deck"}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <div>
+            <div className="section-title">By project type</div>
+            <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
+          </div>
+        </div>
+        <div className="panel">
+          <BreakdownBars rows={typeRows} />
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <div>
+            <div className="section-title">By project size</div>
+            <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
+          </div>
+        </div>
+        <div className="panel">
+          <BreakdownBars rows={sizeRows} />
+        </div>
+      </section>
+
+      <div className="notice">
+        <span className="notice-dot" />
+        <span>
+          ERCOT does not publish project-level large-load data. These figures are chart-level
+          aggregates extracted from committee slide decks (vision extraction, cross-validated across
+          overlapping decks). See <a href="/methodology">methodology</a> for what this data can and
+          cannot say.
+        </span>
+      </div>
+    </>
+  );
+}
