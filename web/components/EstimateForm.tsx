@@ -11,6 +11,7 @@ import {
   sizeBucketPercentile,
   type LoadType,
 } from "@/lib/estimate";
+import { Term } from "@/components/Term";
 import { formatMW } from "@/lib/format";
 
 export function EstimateForm({
@@ -113,10 +114,14 @@ export function EstimateForm({
           </div>
 
           <div className="estimate-result-row">
-            <span className="zone-stat-label">System-wide approval throughput</span>
+            <span className="zone-stat-label">
+              <Term def="Not specific to this zone — ERCOT doesn't publish a per-zone version of this number, so this is the whole-grid rate.">
+                How fast ERCOT approves loads, grid-wide
+              </Term>
+            </span>
             <span className="zone-stat-value mono">
               {throughput.medianMWPerMonth != null
-                ? `${Math.round(throughput.medianMWPerMonth).toLocaleString("en-US")} MW/mo (median)`
+                ? `${Math.round(throughput.medianMWPerMonth).toLocaleString("en-US")} MW/mo (typical month)`
                 : "—"}
             </span>
           </div>
@@ -141,7 +146,12 @@ export function EstimateForm({
 
           {timeline && (
             <div className="estimate-result-row">
-              <span className="zone-stat-label">Measured generator-side timeline, {timeline.zones.join("/")}</span>
+              <span className="zone-stat-label">
+                <Term def="ERCOT doesn't track large-load timelines yet, so this uses measured power-plant interconnection times in the same zone as the closest real-world comparison.">
+                  How long similar projects have taken
+                </Term>{" "}
+                ({timeline.zones.join("/")})
+              </span>
               <span className="zone-stat-value mono">
                 {timeline.min === timeline.max
                   ? `${timeline.min} yr`

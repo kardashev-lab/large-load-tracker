@@ -1,6 +1,7 @@
 import type { ZoneCardData } from "@/lib/zones";
 import type { ZoneStat } from "@/lib/api";
 import { ZoneStressSpark } from "@/components/ZoneStressSpark";
+import { Term } from "@/components/Term";
 import { formatMW, formatPct } from "@/lib/format";
 
 const GRADE_TONE: Record<string, string> = { A: "grade-a", B: "grade-b", C: "grade-c", D: "grade-d" };
@@ -14,37 +15,53 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
 
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Load queue (LLWG)</span>
+        <span className="zone-stat-label">Large loads waiting to connect</span>
         <span className="zone-stat-value mono">{formatMW(data.loadMW)}</span>
       </div>
       {data.loadIsShared && (
         <div className="zone-note">Not broken out separately — combined into ERCOT&apos;s &quot;Other&quot; bucket.</div>
       )}
 
-      <div className="zone-section-label">Generator-side timelines (median)</div>
+      <div className="zone-section-label">
+        <Term def="ERCOT doesn't publish how long large loads like data centers take yet. This uses power-plant interconnection times in the same zone as the closest real-world stand-in.">
+          How long it&apos;s taken others
+        </Term>
+      </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Full process</span>
+        <span className="zone-stat-label">
+          <Term def="Time from first application to actually being allowed to draw power, start to finish.">
+            Start to finish
+          </Term>
+        </span>
         <span className="zone-stat-value mono">
           {data.fullProcessYears != null ? `${data.fullProcessYears} yr` : "—"}
         </span>
       </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Build phase (IA→energized)</span>
+        <span className="zone-stat-label">
+          <Term def="Time from signing the interconnection agreement (the formal construction contract) to actually being energized.">
+            After signing the agreement
+          </Term>
+        </span>
         <span className="zone-stat-value mono">
           {data.buildPhaseYears != null ? `${data.buildPhaseYears} yr` : "—"}
         </span>
       </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">COD slippage</span>
+        <span className="zone-stat-label">
+          <Term def="How much later projects actually came online compared to the completion date they originally filed.">
+            Typically runs late by
+          </Term>
+        </span>
         <span className="zone-stat-value mono">
-          {data.codSlipYears != null ? `${data.codSlipYears} yr late` : "—"}
+          {data.codSlipYears != null ? `${data.codSlipYears} yr` : "—"}
         </span>
       </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Pending backlog</span>
+        <span className="zone-stat-label">Queue ahead of you</span>
         <span className="zone-stat-value mono">
           {formatMW(data.pendingMW)}
-          {data.pendingCount != null ? ` · ${data.pendingCount}` : ""}
+          {data.pendingCount != null ? ` · ${data.pendingCount} projects` : ""}
         </span>
       </div>
       <div className="zone-stat-row">
@@ -55,31 +72,38 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
       {data.annualThroughputMW != null && (
         <div className="zone-note">
-          Zone has historically energized {formatMW(data.annualThroughputMW)}/yr — backlog ÷ throughput,
-          not raw MW.
+          Based on this zone&apos;s own track record: {formatMW(data.annualThroughputMW)} energized per year on
+          average.
         </div>
       )}
 
-      <div className="zone-section-label">Price stress proxy (12mo avg)</div>
+      <div className="zone-section-label">Grid stress signal (from electricity prices)</div>
       {data.stressMonths > 0 ? (
         <>
           <div className="zone-stat-row">
-            <span className="zone-stat-label">Hours &gt; $100/MWh</span>
+            <span className="zone-stat-label">
+              <Term def="Share of 15-minute periods in the past 12 months where wholesale power cost more than $100/MWh — a sign the local grid was strained.">
+                Expensive hours
+              </Term>
+            </span>
             <span className="zone-stat-value mono">{formatPct(data.stressPctOver100)}</span>
           </div>
           <div className="zone-stat-row">
-            <span className="zone-stat-label">Hours negative</span>
+            <span className="zone-stat-label">
+              <Term def="Share of 15-minute periods where power prices went below $0 — a sign of too much local generation (usually wind/solar) and not enough demand to soak it up.">
+                Oversupplied hours
+              </Term>
+            </span>
             <span className="zone-stat-value mono">{formatPct(data.stressPctNegative)}</span>
           </div>
           <ZoneStressSpark months={months} />
         </>
       ) : (
-        <div className="zone-note">No matching LMP settlement-point zone for this CDR zone.</div>
+        <div className="zone-note">No price data available for this specific zone.</div>
       )}
 
       <div className="zone-formula">
-        Grade = avg rank across {data.gradeInputs.map((g) => g.label).join(", ")} ({data.gradeInputs.length}/3
-        factors available), lower rank is better.
+        Grade = average rank across {data.gradeInputs.length} of 3 factors ({data.gradeInputs.map((g) => g.label).join(", ")}). No hidden weighting — every input above feeds directly into the grade.
       </div>
     </div>
   );

@@ -1,9 +1,11 @@
 export const dynamic = "force-dynamic";
 
+import Link from "next/link";
 import { fetchLargeLoadHistory, checkApiHealth } from "@/lib/api";
 import { StatGrid, type Stat } from "@/components/StatGrid";
 import { QueueGrowthChart } from "@/components/QueueGrowthChart";
 import { BreakdownBars } from "@/components/BreakdownBars";
+import { Term } from "@/components/Term";
 import { formatDate, formatMW, formatDelta } from "@/lib/format";
 
 const TYPE_LABELS: Record<string, string> = {
@@ -131,6 +133,19 @@ export default async function HomePage() {
         </p>
       </section>
 
+      <div className="start-here">
+        <div className="start-here-text">
+          <div className="start-here-label">New here?</div>
+          <div className="start-here-desc">
+            Don&apos;t need to read grid jargon to get an answer. Tell us your project&apos;s size and
+            location and we&apos;ll show you where it stands.
+          </div>
+        </div>
+        <Link href="/estimate" className="start-here-cta">
+          Estimate my project →
+        </Link>
+      </div>
+
       <StatGrid stats={stats} />
 
       <section className="section">
@@ -138,8 +153,15 @@ export default async function HomePage() {
           <div>
             <div className="section-title">Large load queue, tracked history</div>
             <div className="section-desc">
-              Co-located vs. standalone MW, monthly. Break in the line is a disclosed gap in ERCOT&apos;s
-              own reporting, not missing data.
+              <Term def="Built next to an existing power plant, sharing its connection instead of needing a new one from the grid.">
+                Co-located
+              </Term>{" "}
+              vs.{" "}
+              <Term def="A standalone project that needs its own new connection to the grid, built from scratch.">
+                standalone
+              </Term>{" "}
+              MW, monthly. Break in the line is a disclosed gap in ERCOT&apos;s own reporting, not missing
+              data.
             </div>
           </div>
         </div>
@@ -161,8 +183,11 @@ export default async function HomePage() {
           <div>
             <div className="section-title">The reality gap</div>
             <div className="section-desc">
-              How much of the load ERCOT has approved to energize is actually observed as real
-              consumption.
+              Of everything ERCOT has said &quot;yes, you can turn on,&quot; how much has actually{" "}
+              <Term def="ERCOT has directly measured this load drawing real power, not just approved it on paper.">
+                shown up and started drawing power
+              </Term>
+              ?
             </div>
           </div>
         </div>
