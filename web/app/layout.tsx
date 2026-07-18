@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -78,15 +79,6 @@ const jsonLd = {
   ],
 };
 
-const NAV = [
-  { href: "/", label: "Overview", hint: "The big picture" },
-  { href: "/estimate", label: "Estimate", hint: "How long for MY project?" },
-  { href: "/zones", label: "Zones", hint: "Where's easiest to build" },
-  { href: "/batch-zero", label: "Batch Zero", hint: "New ERCOT rule, explained" },
-  { href: "/report", label: "Report", hint: "What changed this month" },
-  { href: "/methodology", label: "Methodology", hint: "Where the numbers come from" },
-];
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full`}>
@@ -103,14 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="site-brand-mark">Large Load Tracker</span>
                 <span className="site-brand-sub">ERCOT</span>
               </Link>
-              <nav className="site-nav">
-                {NAV.map((item) => (
-                  <div key={item.href} className="site-nav-item">
-                    <Link href={item.href}>{item.label}</Link>
-                    <span className="site-nav-hint">{item.hint}</span>
-                  </div>
-                ))}
-              </nav>
+              <SiteNav />
             </div>
           </header>
           <div className="wrap">

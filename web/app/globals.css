@@ -89,11 +89,19 @@ a { color: inherit; }
   letter-spacing: 0.04em;
   color: var(--ink-soft);
   text-decoration: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   transition: color 0.12s, border-color 0.12s;
 }
 
-.site-nav a:hover { color: var(--ink); border-color: var(--accent); }
+.site-nav a:hover { color: var(--ink); border-color: var(--border-strong); }
+
+.site-nav a.active {
+  color: var(--ink);
+  font-weight: 700;
+  border-color: var(--accent);
+}
+
+.site-nav-item:has(a.active) .site-nav-hint { color: var(--ink-soft); }
 
 .site-nav-hint { font-size: 10px; color: var(--muted); padding: 0 14px 6px; white-space: nowrap; }
 
