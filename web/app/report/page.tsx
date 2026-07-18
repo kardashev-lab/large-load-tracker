@@ -1,12 +1,11 @@
-import { ComingSoon } from "@/components/ComingSoon";
+export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Report | ERCOT Large Load Tracker" };
+import { redirect } from "next/navigation";
+import { fetchLargeLoadHistory } from "@/lib/api";
 
-export default function ReportPage() {
-  return (
-    <ComingSoon
-      title="State of ERCOT Large Load"
-      description="Auto-generated monthly summary: what changed this month, notable status movements, and the updated reality-gap number. Permalinked per month."
-    />
-  );
+export default async function ReportRedirect() {
+  const history = await fetchLargeLoadHistory();
+  const latest = [...history].sort((a, b) => a.snapshot_month.localeCompare(b.snapshot_month)).pop();
+  const month = latest ? latest.snapshot_month.slice(0, 7) : new Date().toISOString().slice(0, 7);
+  redirect(`/report/${month}`);
 }

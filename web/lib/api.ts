@@ -75,6 +75,18 @@ export async function fetchLargeLoadLatest(): Promise<LargeLoadSnapshot | null> 
   return apiFetch<LargeLoadSnapshot>("/ercot/large-load/latest");
 }
 
+export type LargeLoadSummary = {
+  latest: LargeLoadSnapshot;
+  mom: { snapshot_month: string; total_mw: { mw: number; pct: number | null } | null } | null;
+  yoy: { snapshot_month: string; total_mw: { mw: number; pct: number | null } | null } | null;
+  reality_gap: { approved_to_energize_mw: number | null; observed_energized_mw: number | null; pct: number | null } | null;
+  notable_movements: { category: string; mw_delta: number }[];
+};
+
+export async function fetchLargeLoadSummary(): Promise<LargeLoadSummary | null> {
+  return apiFetch<LargeLoadSummary>("/ercot/large-load/summary");
+}
+
 export async function fetchGisTimelines(params?: {
   zone?: string;
   fuel?: string;

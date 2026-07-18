@@ -292,6 +292,18 @@ a { color: inherit; }
   margin-top: 6px;
 }
 
+/* ── Report month nav ──────────────────────────────────── */
+.report-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.report-nav a { color: var(--text-secondary); text-decoration: none; }
+.report-nav a:hover { color: var(--amber); }
+
 /* ── Estimate form ─────────────────────────────────────── */
 .estimate-form {
   display: grid;
