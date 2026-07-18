@@ -57,7 +57,7 @@ export function EstimateForm({
         className="estimate-form"
       >
         <div className="estimate-field">
-          <label className="zone-section-label" htmlFor="zone">
+          <label className="estimate-label" htmlFor="zone">
             Zone
           </label>
           <select id="zone" className="estimate-select" value={zoneKey} onChange={(e) => setZoneKey(e.target.value)}>
@@ -70,7 +70,7 @@ export function EstimateForm({
         </div>
 
         <div className="estimate-field">
-          <label className="zone-section-label" htmlFor="mw">
+          <label className="estimate-label" htmlFor="mw">
             Project size (MW)
           </label>
           <input
@@ -84,7 +84,7 @@ export function EstimateForm({
         </div>
 
         <div className="estimate-field">
-          <label className="zone-section-label" htmlFor="type">
+          <label className="estimate-label" htmlFor="type">
             Load type
           </label>
           <select

@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV = [
-  { href: "/", label: "Overview", hint: "The big picture" },
   { href: "/estimate", label: "Estimate", hint: "How long for MY project?" },
   { href: "/zones", label: "Zones", hint: "Where's easiest to build" },
   { href: "/batch-zero", label: "Batch Zero", hint: "New ERCOT rule, explained" },
@@ -12,22 +12,30 @@ const NAV = [
   { href: "/methodology", label: "Methodology", hint: "Where the numbers come from" },
 ];
 
-export function SiteNav() {
+export function SiteHeader() {
   const pathname = usePathname();
+  const onHome = pathname === "/";
 
   return (
-    <nav className="site-nav">
-      {NAV.map((item) => {
-        const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-        return (
-          <div key={item.href} className="site-nav-item">
-            <Link href={item.href} className={isActive ? "active" : undefined} aria-current={isActive ? "page" : undefined}>
-              {item.label}
-            </Link>
-            <span className="site-nav-hint">{item.hint}</span>
-          </div>
-        );
-      })}
-    </nav>
+    <div className="site-header-inner">
+      <Link href="/" className={`site-brand${onHome ? " active" : ""}`} aria-current={onHome ? "page" : undefined}>
+        <Image src="/images/ercot.png" alt="" width={22} height={22} className="shrink-0" />
+        <span className="site-brand-mark">Large Load Tracker</span>
+        <span className="site-brand-sub">ERCOT</span>
+      </Link>
+      <nav className="site-nav">
+        {NAV.map((item) => {
+          const isActive = pathname.startsWith(item.href);
+          return (
+            <div key={item.href} className="site-nav-item">
+              <Link href={item.href} className={isActive ? "active" : undefined} aria-current={isActive ? "page" : undefined}>
+                {item.label}
+              </Link>
+              <span className="site-nav-hint">{item.hint}</span>
+            </div>
+          );
+        })}
+      </nav>
+    </div>
   );
 }

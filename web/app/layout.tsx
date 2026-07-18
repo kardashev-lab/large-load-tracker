@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
-import Image from "next/image";
-import Link from "next/link";
-import { SiteNav } from "@/components/SiteNav";
+import { SiteHeader } from "@/components/SiteNav";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -89,14 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <div className="page">
           <header className="site-header">
-            <div className="site-header-inner">
-              <Link href="/" className="site-brand">
-                <Image src="/images/ercot.png" alt="" width={22} height={22} className="shrink-0" />
-                <span className="site-brand-mark">Large Load Tracker</span>
-                <span className="site-brand-sub">ERCOT</span>
-              </Link>
-              <SiteNav />
-            </div>
+            <SiteHeader />
           </header>
           <div className="wrap">
             {children}
