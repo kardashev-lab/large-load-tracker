@@ -1,12 +1,41 @@
-import { ComingSoon } from "@/components/ComingSoon";
+export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Estimate | ERCOT Large Load Tracker" };
+import type { Metadata } from "next";
+import { fetchLargeLoadHistory, fetchLargeLoadLatest, fetchGisTimelines } from "@/lib/api";
+import { EstimateForm } from "@/components/EstimateForm";
 
-export default function EstimatePage() {
+export const metadata: Metadata = {
+  title: "Estimate | ERCOT Large Load Tracker",
+  description:
+    "Ahead of you in line: current queue depth, historical approval throughput, and measured generator-side timelines for a large-load project in ERCOT.",
+};
+
+export default async function EstimatePage() {
+  const [history, latest, timelines] = await Promise.all([
+    fetchLargeLoadHistory(),
+    fetchLargeLoadLatest(),
+    fetchGisTimelines(),
+  ]);
+
+  if (!history.length) {
+    return <div className="api-error">Data API is unreachable right now. Try again shortly.</div>;
+  }
+
   return (
-    <ComingSoon
-      title="Ahead of you in line"
-      description="Enter a zone, MW, and load type to see current queue depth, historical throughput, and measured timelines for projects of that profile. Descriptive arithmetic from published data, not a forecast."
-    />
+    <>
+      <section className="hero">
+        <span className="eyebrow">Estimate</span>
+        <h1 className="hero-title">Ahead of you in line</h1>
+        <p className="hero-desc">
+          Pick a zone, size, and load type. Everything below is arithmetic on published ERCOT data — current
+          queue depth, historical approval pace, and measured generator-side timelines used as the best available
+          analog. Not a forecast, not a promise.
+        </p>
+      </section>
+
+      <div className="section">
+        <EstimateForm history={history} latest={latest} timelines={timelines} />
+      </div>
+    </>
   );
 }

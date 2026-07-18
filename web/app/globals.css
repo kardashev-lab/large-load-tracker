@@ -292,6 +292,76 @@ a { color: inherit; }
   margin-top: 6px;
 }
 
+/* ── Estimate form ─────────────────────────────────────── */
+.estimate-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.estimate-field { display: flex; flex-direction: column; gap: 6px; }
+
+.estimate-select,
+.estimate-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.estimate-select:focus,
+.estimate-input:focus {
+  outline: none;
+  border-color: var(--amber);
+}
+
+.estimate-submit {
+  background: var(--amber);
+  color: #0a0a0a;
+  border: none;
+  padding: 11px 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.12s;
+}
+
+.estimate-submit:hover { opacity: 0.85; }
+
+.estimate-result {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.estimate-result-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.estimate-headline {
+  background: var(--amber-dim);
+  border: 1px solid rgba(255, 176, 32, 0.3);
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 6px 0;
+}
+
+.estimate-headline .amber { color: var(--amber); font-weight: 700; }
+
 /* ── Zone scorecards ───────────────────────────────────── */
 .zone-grid {
   display: grid;
@@ -460,4 +530,5 @@ a { color: inherit; }
   .chart-container { height: 240px; }
   .bar-row-label { width: 96px; }
   .zone-grid { grid-template-columns: 1fr; }
+  .estimate-form { grid-template-columns: 1fr; }
 }
