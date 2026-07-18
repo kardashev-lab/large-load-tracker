@@ -121,7 +121,6 @@ export default async function HomePage() {
   return (
     <>
       <header className="hero">
-        <div className="hero-bg" />
         <div className="hero-inner">
           <div className="hero-top">
             <div className="hero-copy">
@@ -137,17 +136,17 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats">
               <div className="hero-stat">
-                <span className="font-label">Tracked load</span>
+                <span className="stat-label">Tracked load</span>
                 <span className="hero-stat-value">{formatMW(latest.total_mw)}</span>
               </div>
               <div className="hero-stat">
-                <span className="font-label">Data center share</span>
+                <span className="stat-label">Data center share</span>
                 <span className="hero-stat-value">
                   {dataCenterType ? `${dataCenterType.pct.toFixed(0)}%` : "—"}
                 </span>
               </div>
               <div className="hero-stat">
-                <span className="font-label">Months tracked</span>
+                <span className="stat-label">Months tracked</span>
                 <span className="hero-stat-value">{sorted.length}</span>
               </div>
             </div>
