@@ -47,6 +47,18 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
           {data.pendingCount != null ? ` · ${data.pendingCount}` : ""}
         </span>
       </div>
+      <div className="zone-stat-row">
+        <span className="zone-stat-label">Years to clear at current pace</span>
+        <span className="zone-stat-value mono">
+          {data.yearsToClearBacklog != null ? `${data.yearsToClearBacklog.toFixed(0)} yr` : "—"}
+        </span>
+      </div>
+      {data.annualThroughputMW != null && (
+        <div className="zone-note">
+          Zone has historically energized {formatMW(data.annualThroughputMW)}/yr — backlog ÷ throughput,
+          not raw MW.
+        </div>
+      )}
 
       <div className="zone-section-label">Price stress proxy (12mo avg)</div>
       {data.stressMonths > 0 ? (

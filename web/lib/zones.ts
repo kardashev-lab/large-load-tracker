@@ -25,6 +25,8 @@ export type ZoneCardData = {
   codSlipYears: number | null;
   pendingMW: number | null;
   pendingCount: number | null;
+  annualThroughputMW: number | null;
+  yearsToClearBacklog: number | null;
   stressPctOver100: number | null;
   stressPctNegative: number | null;
   stressMonths: number;
@@ -73,6 +75,13 @@ export function buildZoneCards(
     const buildPhase = findTimeline(timelines, meta.key, "build_phase_days");
     const codSlip = findTimeline(timelines, meta.key, "cod_slip_days");
     const pendingRow = pending.find((p) => p.group_value === meta.key);
+    const throughputRow = findTimeline(timelines, meta.key, "annual_energized_mw");
+    const annualThroughputMW = throughputRow?.total_mw ?? null;
+    const pendingMW = pendingRow?.total_mw ?? null;
+    const yearsToClearBacklog =
+      pendingMW != null && annualThroughputMW != null && annualThroughputMW > 0
+        ? pendingMW / annualThroughputMW
+        : null;
 
     const zoneMonths = meta.lmpZone
       ? zoneStats.filter((z) => z.zone === meta.lmpZone).slice(-12)
@@ -94,8 +103,10 @@ export function buildZoneCards(
       fullProcessYears: fullProcess?.median_years ?? null,
       buildPhaseYears: buildPhase?.median_years ?? null,
       codSlipYears: codSlip?.median_years ?? null,
-      pendingMW: pendingRow?.total_mw ?? null,
+      pendingMW,
       pendingCount: pendingRow?.sample_count ?? null,
+      annualThroughputMW,
+      yearsToClearBacklog,
       stressPctOver100: avgOver100,
       stressPctNegative: avgNegative,
       stressMonths: zoneMonths.length,
@@ -105,13 +116,13 @@ export function buildZoneCards(
 
   const n = rows.length;
   const timelineRanks = rankAscending(rows.map((r) => r.fullProcessYears));
-  const pendingRanks = rankAscending(rows.map((r) => r.pendingMW));
+  const backlogRanks = rankAscending(rows.map((r) => r.yearsToClearBacklog));
   const stressRanks = rankAscending(rows.map((r) => r._stressIndex));
 
   return rows.map((r, i) => {
     const inputs: { label: string; rank: number; of: number }[] = [];
     if (timelineRanks[i] != null) inputs.push({ label: "interconnection timeline", rank: timelineRanks[i]!, of: n });
-    if (pendingRanks[i] != null) inputs.push({ label: "pending backlog", rank: pendingRanks[i]!, of: n });
+    if (backlogRanks[i] != null) inputs.push({ label: "backlog vs. throughput", rank: backlogRanks[i]!, of: n });
     if (stressRanks[i] != null) inputs.push({ label: "price stress", rank: stressRanks[i]!, of: n });
 
     const avgRank = inputs.length ? inputs.reduce((s, x) => s + x.rank, 0) / inputs.length : n;
