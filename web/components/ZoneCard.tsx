@@ -7,11 +7,12 @@ import { formatMW, formatPct } from "@/lib/format";
 const GRADE_TONE: Record<string, string> = { A: "grade-a", B: "grade-b", C: "grade-c", D: "grade-d" };
 
 export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneStat[] }) {
+  const tone = GRADE_TONE[data.grade];
   return (
-    <div className="zone-card">
+    <div className={`zone-card zone-card-${data.grade.toLowerCase()}`}>
       <div className="zone-card-head">
         <span className="zone-card-name">{data.meta.label}</span>
-        <span className={`grade-badge ${GRADE_TONE[data.grade]}`}>{data.grade}</span>
+        <span className={`grade-badge ${tone}`}>{data.grade}</span>
       </div>
 
       <div className="zone-stat-row">
