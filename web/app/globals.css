@@ -114,12 +114,9 @@ body::before {
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
 .site-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 40;
-  background-color: rgba(247, 246, 243, 0.88);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
 }
 
 .site-header-inner {
@@ -183,7 +180,8 @@ body::before {
   z-index: 0;
   background-image: url("/images/hero-transmission.jpg");
   background-size: cover;
-  background-position: center 35%;
+  background-position: center 30%;
+  opacity: 0.35;
 }
 
 .hero-bg::after {
@@ -191,8 +189,8 @@ body::before {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, white 30%, rgba(255, 255, 255, 0.85) 60%, rgba(255, 255, 255, 0.35) 100%),
-    linear-gradient(to top, var(--canvas), rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.2));
+    linear-gradient(to right, white 22%, rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0.6) 100%),
+    linear-gradient(to top, var(--canvas), rgba(255, 255, 255, 0.5) 30%, rgba(255, 255, 255, 0.3));
 }
 
 .hero-inner {
@@ -200,10 +198,10 @@ body::before {
   z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 20px 36px;
+  padding: 64px 20px 56px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 36px;
 }
 
 .hero-top {
@@ -257,9 +255,13 @@ body::before {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.1;
-  font-size: 34px;
+  font-size: 36px;
   color: var(--ink);
   max-width: 640px;
+}
+
+@media (min-width: 640px) {
+  .hero-title { font-size: 48px; }
 }
 
 .hero-title .amber { color: var(--accent); }
