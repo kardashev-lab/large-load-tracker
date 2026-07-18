@@ -33,7 +33,7 @@ export default function BatchZeroPage() {
 
       <div className="section">
         <div className="section-head">
-          <div className="section-title">Why this exists</div>
+          <h2 className="section-title">Why this exists</h2>
         </div>
         <div className="panel">
           <p className="section-desc" style={{ marginBottom: 10 }}>
@@ -53,7 +53,7 @@ export default function BatchZeroPage() {
 
       <div className="section">
         <div className="section-head">
-          <div className="section-title">Timeline</div>
+          <h2 className="section-title">Timeline</h2>
           <div className="section-desc">Sourced from ERCOT where we can. Unconfirmed dates are flagged.</div>
         </div>
         <div className="panel">
@@ -84,7 +84,7 @@ export default function BatchZeroPage() {
 
       <div className="section">
         <div className="section-head">
-          <div className="section-title">How projects get classified</div>
+          <h2 className="section-title">How projects get classified</h2>
         </div>
         <div className="panel">
           <div className="bar-list">
@@ -99,7 +99,7 @@ export default function BatchZeroPage() {
 
       <div className="section">
         <div className="section-head">
-          <div className="section-title">Optional connection pathways</div>
+          <h2 className="section-title">Optional connection pathways</h2>
           <div className="section-desc">Two ways to connect faster, if you ease pressure on the grid.</div>
         </div>
         <div className="panel">

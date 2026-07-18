@@ -85,12 +85,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <div className="page">
           <header className="site-header">
             <SiteHeader />
           </header>
           <div className="wrap">
-            {children}
+            <main id="main-content">{children}</main>
             <footer className="footer">
               <span>
                 A <a href="https://kardashevlabs.org">Kardashev Labs</a> tool. Data from ERCOT public

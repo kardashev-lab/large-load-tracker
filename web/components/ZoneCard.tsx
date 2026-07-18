@@ -11,7 +11,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
   return (
     <div className={`zone-card zone-card-${data.grade.toLowerCase()}`}>
       <div className="zone-card-head">
-        <span className="zone-card-name">{data.meta.label}</span>
+        <h3 className="zone-card-name">{data.meta.label}</h3>
         <span className={`grade-badge ${tone}`}>{data.grade}</span>
       </div>
 

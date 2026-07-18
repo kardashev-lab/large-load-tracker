@@ -1,0 +1,31 @@
+# ERCOT Large Load Tracker
+
+> Tracks ERCOT's large-load (data center, crypto, industrial) interconnection queue over time, using ERCOT's own public committee filings. Built and maintained by Kardashev Labs.
+
+This site answers three questions with public data, not forecasts or opinion:
+- How much large load is in ERCOT's queue, and how has that changed month to month?
+- Which ERCOT zones can actually absorb new large load, based on queue depth, historical interconnection timelines, and price stress?
+- Given a project's size, zone, and type, roughly how long has similar work taken in ERCOT?
+
+## Data sources
+
+- ERCOT Large Load Working Group (LLWG) and Large Flexible Load Task Force (LFLTF) monthly decks: total queue MW, by-type and by-size breakdowns.
+- ERCOT Generator Interconnection Status (GIS) Report: real interconnection timelines by zone and fuel type, used as the closest available stand-in for large-load timelines (ERCOT does not yet publish those directly).
+- ERCOT wholesale LMP (locational marginal price) history by zone, used as a stress proxy (spike frequency, negative-price frequency).
+
+Full sourcing and known limitations: /methodology
+
+## Pages
+
+- / — Overview: tracked queue history, month-over-month change, reality gap between approved and energized load, breakdowns by type and size.
+- /zones — Zone Scorecards: composite grade per ERCOT zone from queue depth, interconnection timeline, and price stress.
+- /estimate — Estimate: enter a project's zone, size, and type to get a data-backed timeline estimate.
+- /batch-zero — Explains ERCOT's Batch Zero process (PGRR145, NPRR1325, Senate Bill 6): what it is, key dates, how projects are classified.
+- /report/[month] — Permanent monthly snapshot pages, one per LLWG/LFLTF deck.
+- /methodology — Full data sourcing, extraction method, and explicit list of what the data cannot tell you.
+
+## Notes for reuse
+
+- All numbers trace to a public ERCOT filing; see /methodology for the extraction method.
+- Data has real gaps (committee did not meet or publish every month). Gaps are shown as breaks in charts, never interpolated or guessed.
+- This is historical data, not a forecast.

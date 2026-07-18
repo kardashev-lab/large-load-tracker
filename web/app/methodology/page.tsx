@@ -21,7 +21,7 @@ export default function MethodologyPage() {
 
       <section className="section">
         <div className="section-head">
-          <div className="section-title">Large-load queue history</div>
+          <h2 className="section-title">Large-load queue history</h2>
         </div>
         <div className="panel">
           <p className="section-desc" style={{ marginBottom: 12 }}>
@@ -47,7 +47,7 @@ export default function MethodologyPage() {
 
       <section className="section">
         <div className="section-head">
-          <div className="section-title">Generator interconnection timelines</div>
+          <h2 className="section-title">Generator interconnection timelines</h2>
         </div>
         <div className="panel">
           <p className="section-desc">
@@ -62,7 +62,7 @@ export default function MethodologyPage() {
 
       <section className="section">
         <div className="section-head">
-          <div className="section-title">Zone stress proxy</div>
+          <h2 className="section-title">Zone stress proxy</h2>
         </div>
         <div className="panel">
           <p className="section-desc">
@@ -76,7 +76,7 @@ export default function MethodologyPage() {
 
       <section className="section">
         <div className="section-head">
-          <div className="section-title">What this data can&apos;t tell you</div>
+          <h2 className="section-title">What this data can&apos;t tell you</h2>
         </div>
         <div className="panel">
           <ul style={{ paddingLeft: 18, display: "flex", flexDirection: "column", gap: 8 }}>

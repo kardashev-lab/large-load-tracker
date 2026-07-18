@@ -89,7 +89,7 @@ export default async function ReportMonthPage({ params }: { params: Promise<{ mo
 
       <div className="section">
         <div className="section-head">
-          <div className="section-title">What moved this month</div>
+          <h2 className="section-title">What moved this month</h2>
         </div>
         <div className="panel">
           {notableMovements.length ? (

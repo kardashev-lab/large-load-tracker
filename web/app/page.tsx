@@ -172,7 +172,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <div className="section-title">Large load queue, tracked history</div>
+            <h2 className="section-title">Large load queue, tracked history</h2>
             <div className="section-desc">
               <Term def="Built next to an existing power plant, sharing its connection instead of needing a new one from the grid.">
                 Co-located
@@ -202,7 +202,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <div className="section-title">The reality gap</div>
+            <h2 className="section-title">The reality gap</h2>
             <div className="section-desc">
               Of everything ERCOT has said &quot;yes, you can turn on,&quot; how much has actually{" "}
               <Term def="ERCOT has directly measured this load drawing real power, not just approved it on paper.">
@@ -233,7 +233,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <div className="section-title">By project type</div>
+            <h2 className="section-title">By project type</h2>
             <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
           </div>
         </div>
@@ -245,7 +245,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <div className="section-title">By project size</div>
+            <h2 className="section-title">By project size</h2>
             <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
           </div>
         </div>
