@@ -2,7 +2,7 @@ import path from "path";
 import type { NextConfig } from "next";
 
 const config: NextConfig = {
-  output: "standalone",
+
   outputFileTracingRoot: path.join(__dirname),
   async headers() {
     return [

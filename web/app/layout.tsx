@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Kardashev Labs",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "ERCOT Large Load Tracker | Kardashev Labs",
     description:
       "Large-load interconnection queue history, zone timelines, and the reality gap between approved and operational load in ERCOT.",
@@ -96,8 +96,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main id="main-content">{children}</main>
             <footer className="footer">
               <span>
-                A <a href="https://kardashevlabs.org">Kardashev Labs</a> tool. Data from ERCOT public
-                committee filings.
+                A <a href="https://kardashevlabs.org">Kardashev Labs</a> tool. Related:{" "}
+                <a href="https://clearance.kardashevlabs.org">Site Clearance</a>
+                {" · "}
+                <a href="https://interconnection-queue.kardashevlabs.org/interconnection-timelines">
+                  ERCOT timelines
+                </a>
+                {" · "}
+                <a href="https://docs.kardashevlabs.org">Docs</a>
               </span>
               <span>
                 <a href="/methodology">How this is built</a>
