@@ -35,6 +35,11 @@ export default function MethodologyPage() {
             number against up to 12 other decks. If a number is more than 5% off from what the other
             decks say, we go back and check the original PDF before trusting it.
           </p>
+          <p className="section-desc" style={{ marginBottom: 12 }}>
+            ERCOT&apos;s type pie often prints megawatts only on the data-center slice and leaves the
+            other wedges as percentages. When that happens we derive MW as share × total tracked load
+            for that month, rather than showing zeros.
+          </p>
           <p className="section-desc">
             <strong>There are real gaps in the data.</strong> The committee didn&apos;t meet or post this
             deck every single month, especially in the earlier LFLTF era, so several months are missing

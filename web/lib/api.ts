@@ -49,7 +49,13 @@ export type ZoneStat = {
 
 async function apiFetch<T>(path: string, revalidate = 3600): Promise<T | null> {
   try {
-    const res = await fetch(`${API}${path}`, { next: { revalidate } });
+    // Large-load extracts update rarely, but when they do (or when we repair a
+    // row) a long ISR cache leaves the homepage wrong for up to an hour.
+    // Prefer short revalidate; callers that need fresher can pass 0.
+    const res = await fetch(`${API}${path}`, {
+      next: revalidate === 0 ? { revalidate: 0 } : { revalidate },
+      ...(revalidate === 0 ? { cache: "no-store" as const } : {}),
+    });
     if (!res.ok) return null;
     return res.json() as Promise<T>;
   } catch {
@@ -67,12 +73,12 @@ export async function checkApiHealth(): Promise<boolean> {
 }
 
 export async function fetchLargeLoadHistory(): Promise<LargeLoadSnapshot[]> {
-  const data = await apiFetch<LargeLoadSnapshot[]>("/ercot/large-load/history");
+  const data = await apiFetch<LargeLoadSnapshot[]>("/ercot/large-load/history", 60);
   return data ?? [];
 }
 
 export async function fetchLargeLoadLatest(): Promise<LargeLoadSnapshot | null> {
-  return apiFetch<LargeLoadSnapshot>("/ercot/large-load/latest");
+  return apiFetch<LargeLoadSnapshot>("/ercot/large-load/latest", 60);
 }
 
 export type LargeLoadSummary = {

@@ -7,22 +7,21 @@ import { QueueGrowthChart } from "@/components/QueueGrowthChart";
 import { BreakdownBars } from "@/components/BreakdownBars";
 import { Term } from "@/components/Term";
 import { formatDate, formatMW, formatDelta } from "@/lib/format";
-
-const TYPE_LABELS: Record<string, string> = {
-  data_center: "Data center",
-  crypto: "Crypto",
-  industrial: "Industrial",
-  data_center_crypto: "Data center / crypto",
-  hydrogen: "Hydrogen",
-  not_specified: "Not specified",
-  none: "Not specified",
-};
+import { normalizeByType } from "@/lib/byType";
 
 const SIZE_LABELS: Record<string, string> = {
   "75_250mw": "75–250 MW",
   "250_500mw": "250–500 MW",
   "500_1000mw": "500–1,000 MW",
   "1000mw_plus": "1,000+ MW",
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  no_studies_submitted: "No studies submitted",
+  under_ercot_review: "Under ERCOT review",
+  planning_studies_approved: "Planning studies approved",
+  approved_to_energize_not_operational: "Approved to energize (not operational)",
+  observed_energized: "Observed energized",
 };
 
 export default async function HomePage() {
@@ -76,7 +75,8 @@ export default async function HomePage() {
     });
   }
 
-  const dataCenterType = latest.by_type?.["data_center"] as { mw: number; pct: number } | undefined;
+  const typeRowsNormalized = normalizeByType(latest.by_type, latest.total_mw);
+  const dataCenterType = typeRowsNormalized.find((r) => r.key === "data_center");
   const colocatedPct = latest.total_mw ? (latest.colocated_mw ?? 0) / latest.total_mw : null;
 
   const stats: Stat[] = [
@@ -96,7 +96,7 @@ export default async function HomePage() {
     },
     {
       label: "Data center share",
-      value: dataCenterType ? `${dataCenterType.pct.toFixed(1)}%` : "—",
+      value: dataCenterType?.pct != null ? `${dataCenterType.pct.toFixed(1)}%` : "—",
       sub: colocatedPct != null ? `${(colocatedPct * 100).toFixed(1)}% co-located` : undefined,
       tone: "neutral",
     },
@@ -107,11 +107,36 @@ export default async function HomePage() {
   const realityRatio =
     approvedToEnergize && observedEnergized != null ? observedEnergized / approvedToEnergize : null;
 
-  const typeRows = latest.by_type
-    ? Object.entries(latest.by_type as Record<string, { mw: number; pct: number }>)
-        .map(([k, v]) => ({ label: TYPE_LABELS[k] ?? k, mw: v.mw }))
-        .sort((a, b) => b.mw - a.mw)
-    : [];
+  const typeRows = typeRowsNormalized.map((r) => ({ label: r.label, mw: r.mw }));
+
+  // Prefer the dedicated approvals columns when the status table left them blank
+  // (common: pie/status chart omits planning-studies MW that the approvals chart has).
+  const statusSource: Record<string, number | null | undefined> = {
+    ...(latest.by_status ?? {}),
+    planning_studies_approved:
+      (latest.by_status?.["planning_studies_approved"] as number | null | undefined) ??
+      latest.planning_studies_approved_mw,
+    approved_to_energize_not_operational:
+      (latest.by_status?.["approved_to_energize_not_operational"] as number | null | undefined) ??
+      (approvedToEnergize != null && observedEnergized != null
+        ? Math.max(approvedToEnergize - observedEnergized, 0)
+        : undefined),
+    observed_energized: observedEnergized,
+  };
+  const statusOrder = [
+    "no_studies_submitted",
+    "under_ercot_review",
+    "planning_studies_approved",
+    "approved_to_energize_not_operational",
+    "observed_energized",
+  ];
+  const statusRows = statusOrder
+    .map((k) => {
+      const mw = statusSource[k];
+      if (mw == null || !Number.isFinite(mw) || mw < 0) return null;
+      return { label: STATUS_LABELS[k] ?? k, mw: Number(mw) };
+    })
+    .filter((r): r is { label: string; mw: number } => r != null);
 
   const sizeRows = latest.by_size_bucket
     ? Object.entries(latest.by_size_bucket as Record<string, { mw: number; count: number }>)
@@ -142,7 +167,7 @@ export default async function HomePage() {
               <div className="hero-stat">
                 <span className="stat-label">Data center share</span>
                 <span className="hero-stat-value">
-                  {dataCenterType ? `${dataCenterType.pct.toFixed(0)}%` : "—"}
+                  {dataCenterType?.pct != null ? `${dataCenterType.pct.toFixed(0)}%` : "—"}
                 </span>
               </div>
               <div className="hero-stat">
@@ -233,8 +258,26 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
+            <h2 className="section-title">By queue status</h2>
+            <div className="section-desc">
+              Same cut ERCOT shows in public LLWG / conference decks — speculative vs advanced vs energized.
+              Latest snapshot, {formatDate(latest.snapshot_month)}.
+            </div>
+          </div>
+        </div>
+        <div className="panel">
+          <BreakdownBars rows={statusRows} />
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <div>
             <h2 className="section-title">By project type</h2>
-            <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
+            <div className="section-desc">
+              Latest snapshot, {formatDate(latest.snapshot_month)}. When ERCOT only labels percentages on the
+              type pie, MW is derived from share × total tracked load.
+            </div>
           </div>
         </div>
         <div className="panel">

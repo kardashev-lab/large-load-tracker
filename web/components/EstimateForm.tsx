@@ -13,6 +13,7 @@ import {
 } from "@/lib/estimate";
 import { Term } from "@/components/Term";
 import { formatMW } from "@/lib/format";
+import { typeSharePct } from "@/lib/byType";
 
 export function EstimateForm({
   history,
@@ -34,9 +35,7 @@ export function EstimateForm({
   const timeline = zoneTimelineYears(timelines, zone);
   const sizePct = sizeBucketPercentile(latest, mw);
 
-  const typeShare = latest?.by_type
-    ? ((latest.by_type as Record<string, { pct: number }>)[loadType]?.pct ?? null)
-    : null;
+  const typeShare = typeSharePct(latest?.by_type, loadType, latest?.total_mw ?? null);
 
   const yearsAtMedianPace =
     queueDepth != null && throughput.medianMWPerMonth != null
