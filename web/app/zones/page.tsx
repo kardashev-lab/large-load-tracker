@@ -9,7 +9,7 @@ import type { ZoneStat } from "@/lib/api";
 export const metadata: Metadata = {
   title: "Zone Scorecards | ERCOT Large Load Tracker",
   description:
-    "Load queue, generator-side interconnection timelines, and price stress per ERCOT zone, with a transparent composite grade.",
+    "Large-Load Queue, generation-side Full Process, and Settlement Zone stress per CDR Zone, with a Zone Scorecard Mark (A–D).",
 };
 
 export default async function ZonesPage() {
@@ -37,12 +37,11 @@ export default async function ZonesPage() {
   return (
     <>
       <section className="hero">
-        <span className="eyebrow">By zone</span>
-        <h1 className="hero-title">Which zones can actually absorb this load</h1>
+        <span className="eyebrow">Zone Scorecards</span>
+        <h1 className="hero-title">Which CDR Zones can absorb Large Load</h1>
         <p className="hero-desc">
-          Each card mixes three different datasets. We don&apos;t force them to line up when they
-          don&apos;t. The grade is a simple average rank. The formula is printed right on the card, no
-          black box.
+          Each card mixes three datasets and says which geography it actually has (LLWG Split,
+          CDR Zone, Settlement Zone). The Mark is a simple average rank, not a Clearance Band.
         </p>
       </section>
 
@@ -55,8 +54,8 @@ export default async function ZonesPage() {
       <div className="notice">
         <span className="notice-dot" />
         <span>
-          ERCOT splits the grid into zones differently depending on the dataset. They don&apos;t always
-          line up. When a card says a number isn&apos;t available, that&apos;s real, not a bug. See{" "}
+          ERCOT splits the grid into CDR Zones, Settlement Zones, and LLWG Splits. They don&apos;t
+          always line up. When a card says a number isn&apos;t available, that&apos;s real, not a bug. See{" "}
           <a href="/methodology">methodology</a>.
         </span>
       </div>

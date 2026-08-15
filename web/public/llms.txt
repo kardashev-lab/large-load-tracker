@@ -1,36 +1,36 @@
 # ERCOT Large Load Tracker
 
-> Tracks ERCOT's large-load (data center, crypto, industrial) interconnection queue over time, using ERCOT's own public committee filings. Built and maintained by Kardashev Labs.
+> Tracks ERCOT's Large-Load Queue (data center, crypto, industrial) over time, using ERCOT's own public committee filings. Built and maintained by Kardashev Labs.
 
 Site: https://large-load-tracker.kardashevlabs.org
 
 This site answers three questions with public data, not forecasts or opinion:
-- How much large load is in ERCOT's queue, and how has that changed month to month?
-- Which ERCOT zones can actually absorb new large load, based on queue depth, historical interconnection timelines, and price stress?
-- Given a project's size, zone, and type, roughly how long has similar work taken in ERCOT?
+- How much Large Load is in ERCOT's queue, and how has that changed month to month?
+- Which CDR Zones can absorb new Large Load, based on queue depth, generation-side Full Process, and Settlement Zone stress? Each Zone Scorecard carries a Mark (A–D), not a Clearance Band.
+- Line Ahead: given size, LLWG Split, and type, what does arithmetic on Filing Observations say? Not a forecast, not a Clearance, not a time-to-power promise.
 
 ## Data sources
 
-- ERCOT Large Load Working Group (LLWG) and Large Flexible Load Task Force (LFLTF) monthly decks: total queue MW, by-type and by-size breakdowns.
-- ERCOT Generator Interconnection Status (GIS) Report: real interconnection timelines by zone and fuel type, used as the closest available stand-in for large-load timelines (ERCOT does not yet publish those directly).
-- ERCOT wholesale LMP (locational marginal price) history by zone, used as a stress proxy (spike frequency, negative-price frequency).
+- ERCOT Large Load Working Group (LLWG) and Large Flexible Load Task Force (LFLTF) monthly decks: Filing Observations. Latest-per-month is a view.
+- ERCOT Generator Interconnection Status (GIS) Report: GIS Film Full Process by CDR Zone and fuel, used as the closest available stand-in for Large-Load clocks (ERCOT does not yet publish those directly).
+- ERCOT wholesale LMP history by Settlement Zone, used as a stress proxy (spike frequency, negative-price frequency). Negative prices are Markets stress, not Published Curtailment.
 
 Full sourcing and known limitations: https://large-load-tracker.kardashevlabs.org/methodology
 
 ## Pages
 
-- https://large-load-tracker.kardashevlabs.org/: Overview: tracked queue history, month-over-month change, reality gap between approved and energized load, breakdowns by type and size.
-- https://large-load-tracker.kardashevlabs.org/zones: Zone Scorecards: composite grade per ERCOT zone from queue depth, interconnection timeline, and price stress.
-- https://large-load-tracker.kardashevlabs.org/estimate: Estimate: enter a project's zone, size, and type to get a data-backed timeline estimate.
-- https://large-load-tracker.kardashevlabs.org/batch-zero: Explains ERCOT's Batch Zero process (PGRR145, NPRR1325, Senate Bill 6): what it is, key dates, how projects are classified.
+- https://large-load-tracker.kardashevlabs.org/: Overview: tracked queue history, month-over-month change, Reality Gap (Approved-to-Energize MW versus Observed Energized MW), breakdowns by type and size.
+- https://large-load-tracker.kardashevlabs.org/zones: Zone Scorecards: Mark per CDR Zone from queue depth, Full Process, and price stress. Each card names LLWG Split / CDR Zone / Settlement Zone coverage.
+- https://large-load-tracker.kardashevlabs.org/estimate: Line Ahead arithmetic from Filing Observations.
+- https://large-load-tracker.kardashevlabs.org/batch-zero: Batch Zero as a Large-Load Integration instance (PGRR145, NPRR1325, Senate Bill 6).
 - https://large-load-tracker.kardashevlabs.org/report/[month]: Permanent monthly snapshot pages, one per LLWG/LFLTF deck.
 - https://large-load-tracker.kardashevlabs.org/methodology: Full data sourcing, extraction method, and explicit list of what the data cannot tell you.
 
 ## Related Kardashev Labs tools
 
-- https://clearance.kardashevlabs.org: Draw an ERCOT search area for a county-level clearance estimate
-- https://interconnection-queue.kardashevlabs.org/interconnection-timelines: Measured gen-side interconnection timelines
-- https://interconnection-queue.kardashevlabs.org: All-ISO interconnection queue search
+- https://clearance.kardashevlabs.org: Draw an ERCOT Footprint for a county-level Clearance Band
+- https://interconnection-queue.kardashevlabs.org/interconnection-timelines: Measured generation-side Full Process
+- https://interconnection-queue.kardashevlabs.org: Multi-ISO Current Observation
 - https://kardashevlabs.org: Kardashev Labs
 - https://docs.kardashevlabs.org: Python / JS client docs
 

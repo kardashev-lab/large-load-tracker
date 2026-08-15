@@ -227,28 +227,25 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <h2 className="section-title">The reality gap</h2>
+            <h2 className="section-title">Reality Gap</h2>
             <div className="section-desc">
-              Of everything ERCOT has said &quot;yes, you can turn on,&quot; how much has actually{" "}
-              <Term def="ERCOT has directly measured this load drawing real power, not just approved it on paper.">
-                shown up and started drawing power
-              </Term>
-              ?
+              Approved-to-Energize MW versus Observed Energized MW. This is not Pending
+              Interconnection Project MW.
             </div>
           </div>
         </div>
         <div className="gap-grid">
           <div className="gap-cell">
-            <div className="gap-cell-label">Approved to energize</div>
+            <div className="gap-cell-label">Approved-to-Energize MW</div>
             <div className="gap-cell-value">{formatMW(approvedToEnergize)}</div>
             <div className="gap-cell-sub">Cumulative, ERCOT-approved</div>
           </div>
           <div className="gap-cell">
-            <div className="gap-cell-label">Observed energized</div>
+            <div className="gap-cell-label">Observed Energized MW</div>
             <div className="gap-cell-value amber">{formatMW(observedEnergized)}</div>
             <div className="gap-cell-sub">
               {realityRatio != null
-                ? `${(realityRatio * 100).toFixed(0)}% of approved load is actually showing up`
+                ? `${(realityRatio * 100).toFixed(0)}% of Approved-to-Energize MW is Observed Energized`
                 : "Not broken out in this month's deck"}
             </div>
           </div>

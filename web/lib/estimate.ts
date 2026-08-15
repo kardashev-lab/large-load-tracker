@@ -7,9 +7,9 @@ export type ZoneOption = {
 };
 
 export const ZONE_OPTIONS: ZoneOption[] = [
-  { key: "lz_west", label: "West", gisZones: ["WEST"] },
-  { key: "lz_north", label: "North", gisZones: ["NORTH"] },
-  { key: "other", label: "Other (South / Houston / Coastal / Panhandle)", gisZones: ["SOUTH", "HOUSTON", "COASTAL", "PANHANDLE"] },
+  { key: "lz_west", label: "West (LLWG Split)", gisZones: ["WEST"] },
+  { key: "lz_north", label: "North (LLWG Split)", gisZones: ["NORTH"] },
+  { key: "other", label: "Other LLWG Split (South / Houston / Coastal / Panhandle)", gisZones: ["SOUTH", "HOUSTON", "COASTAL", "PANHANDLE"] },
 ];
 
 export type LoadType = "data_center" | "crypto" | "industrial" | "hydrogen" | "not_specified";

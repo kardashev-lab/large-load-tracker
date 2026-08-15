@@ -57,7 +57,7 @@ export function EstimateForm({
       >
         <div className="estimate-field">
           <label className="estimate-label" htmlFor="zone">
-            Zone
+            LLWG Split
           </label>
           <select id="zone" className="estimate-select" value={zoneKey} onChange={(e) => setZoneKey(e.target.value)}>
             {ZONE_OPTIONS.map((z) => (
@@ -84,7 +84,7 @@ export function EstimateForm({
 
         <div className="estimate-field">
           <label className="estimate-label" htmlFor="type">
-            Load type
+            Large Load type
           </label>
           <select
             id="type"
@@ -108,14 +108,14 @@ export function EstimateForm({
       {submitted && (
         <div className="estimate-result">
           <div className="estimate-result-row">
-            <span className="zone-stat-label">Current queue ahead of you ({zone.label})</span>
+            <span className="zone-stat-label">Large-Load Queue ahead ({zone.label})</span>
             <span className="zone-stat-value mono">{formatMW(queueDepth)}</span>
           </div>
 
           <div className="estimate-result-row">
             <span className="zone-stat-label">
-              <Term def="Not specific to this zone. ERCOT doesn't publish a per-zone version of this number, so this is the whole-grid rate.">
-                How fast ERCOT approves loads, grid-wide
+              <Term def="System-wide. ERCOT does not publish a per-LLWG-Split version of this number.">
+                How fast ERCOT approves Large Load, system-wide
               </Term>
             </span>
             <span className="zone-stat-value mono">
@@ -128,7 +128,7 @@ export function EstimateForm({
           {yearsAtMedianPace != null && (
             <>
               <div className="estimate-headline">
-                At the typical pace, the {zone.label} queue alone would take{" "}
+                At the typical pace, the {zone.label} Large-Load Queue alone would take{" "}
                 <span className="amber">~{yearsAtMedianPace.toFixed(0)} years</span> to clear, if nothing else
                 got added.
               </div>
@@ -146,8 +146,8 @@ export function EstimateForm({
           {timeline && (
             <div className="estimate-result-row">
               <span className="zone-stat-label">
-                <Term def="ERCOT doesn't track large-load timelines yet, so this uses measured power-plant interconnection times in the same zone as the closest real-world comparison.">
-                  How long similar projects have taken
+                <Term def="ERCOT does not publish Large-Load Full Process. This uses measured generation-side Full Process in the matching CDR Zone as the closest stand-in.">
+                  Generation-side Full Process (stand-in)
                 </Term>{" "}
                 ({timeline.zones.join("/")})
               </span>
@@ -177,9 +177,10 @@ export function EstimateForm({
           )}
 
           <div className="zone-formula">
-            This is math on published data, not a forecast. The approval pace is grid-wide, ERCOT doesn&apos;t
-            publish it by zone. The timeline comes from a different queue (power plants, not large loads),
-            used as the closest real stand-in we have. See <a href="/methodology">methodology</a>.
+            Line Ahead is arithmetic on Filing Observations, not a forecast, not a Clearance, and
+            not a time-to-power promise. Approval pace is system-wide; ERCOT does not publish it
+            by LLWG Split. Full Process comes from the Generation Queue, not Large Load. See{" "}
+            <a href="/methodology">methodology</a>.
           </div>
         </div>
       )}

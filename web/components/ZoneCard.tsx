@@ -1,4 +1,5 @@
 import type { ZoneCardData } from "@/lib/zones";
+import { geographyLine } from "@/lib/zones";
 import type { ZoneStat } from "@/lib/api";
 import { ZoneStressSpark } from "@/components/ZoneStressSpark";
 import { Term } from "@/components/Term";
@@ -7,20 +8,23 @@ import { formatMW, formatPct } from "@/lib/format";
 const GRADE_TONE: Record<string, string> = { A: "grade-a", B: "grade-b", C: "grade-c", D: "grade-d" };
 
 export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneStat[] }) {
-  const tone = GRADE_TONE[data.grade];
+  const tone = GRADE_TONE[data.mark];
   return (
-    <div className={`zone-card zone-card-${data.grade.toLowerCase()}`}>
+    <div className={`zone-card zone-card-${data.mark.toLowerCase()}`}>
       <div className="zone-card-head">
         <h3 className="zone-card-name">{data.meta.label}</h3>
-        <span className={`grade-badge ${tone}`}>{data.grade}</span>
+        <span className={`grade-badge ${tone}`} title="Zone Scorecard Mark">
+          {data.mark}
+        </span>
       </div>
+      <div className="zone-note">{geographyLine(data.meta)}</div>
 
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Large loads waiting to connect</span>
+        <span className="zone-stat-label">Large-Load Queue waiting to connect</span>
         <span className="zone-stat-value mono">{formatMW(data.loadMW)}</span>
       </div>
       {data.loadIsShared && (
-        <div className="zone-note">ERCOT doesn&apos;t break this zone out on its own. It&apos;s lumped into &quot;Other.&quot;</div>
+        <div className="zone-note">No own LLWG Split. This CDR Zone is lumped into Other in the decks.</div>
       )}
 
       <div className="zone-section-label">
@@ -30,8 +34,8 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
       <div className="zone-stat-row">
         <span className="zone-stat-label">
-          <Term def="Time from first application to actually being allowed to draw power, start to finish.">
-            Start to finish
+          <Term def="Full Process: Screening Start to Approved for Energization. Not Commercial Operation.">
+            Full Process
           </Term>
         </span>
         <span className="zone-stat-value mono">
@@ -40,8 +44,8 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
       <div className="zone-stat-row">
         <span className="zone-stat-label">
-          <Term def="Time from signing the interconnection agreement (the formal construction contract) to actually being energized.">
-            After signing the agreement
+          <Term def="Build Phase: IA Signed to Approved for Energization.">
+            Build Phase
           </Term>
         </span>
         <span className="zone-stat-value mono">
@@ -50,8 +54,8 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
       <div className="zone-stat-row">
         <span className="zone-stat-label">
-          <Term def="How much later projects actually came online compared to the completion date they originally filed.">
-            Typically runs late by
+          <Term def="Projected Commercial Operation versus actual Commercial Operation. Not Full Process.">
+            COD Slip
           </Term>
         </span>
         <span className="zone-stat-value mono">
@@ -59,7 +63,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
         </span>
       </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Queue ahead of you</span>
+        <span className="zone-stat-label">Generation Queue ahead</span>
         <span className="zone-stat-value mono">
           {formatMW(data.pendingMW)}
           {data.pendingCount != null ? ` · ${data.pendingCount} projects` : ""}
@@ -73,8 +77,8 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
       </div>
       {data.annualThroughputMW != null && (
         <div className="zone-note">
-          Based on this zone&apos;s own track record: {formatMW(data.annualThroughputMW)} energized per year on
-          average.
+          Generation-side pending MW over this CDR Zone&apos;s own Approved for Energization
+          throughput: {formatMW(data.annualThroughputMW)} per year on average.
         </div>
       )}
 
@@ -100,11 +104,11 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
           <ZoneStressSpark months={months} />
         </>
       ) : (
-        <div className="zone-note">No price data for this zone.</div>
+        <div className="zone-note">No Settlement Zone LMP series for this CDR Zone (Coastal and Panhandle have none).</div>
       )}
 
       <div className="zone-formula">
-        Grade is the average rank across {data.gradeInputs.length} of 3 factors ({data.gradeInputs.map((g) => g.label).join(", ")}). Every number above feeds directly into it. Nothing hidden.
+        Mark is the average rank across {data.markInputs.length} of 3 factors ({data.markInputs.map((g) => g.label).join(", ")}). Relative CDR Zone rank, not a Clearance Band.
       </div>
     </div>
   );

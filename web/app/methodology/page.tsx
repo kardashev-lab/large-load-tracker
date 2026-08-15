@@ -90,8 +90,8 @@ export default function MethodologyPage() {
               locations.
             </li>
             <li className="section-desc">
-              The zone split is rough. The load-side decks only break things into West, North, and
-              &quot;everything else.&quot;
+              The split is LLWG Split geography: West, North, and Other. Houston does not have its
+              own Large-Load geography in the decks.
             </li>
             <li className="section-desc">
               This isn&apos;t a forecast. Every number here already happened. Nothing predicts what comes

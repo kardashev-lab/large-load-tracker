@@ -16,9 +16,9 @@ export default function BatchZeroPage() {
         <span className="eyebrow">Batch Zero</span>
         <h1 className="hero-title">ERCOT&apos;s first large-load batch, explained</h1>
         <p className="hero-desc">
-          ERCOT is the first grid operator in the country to approve large loads in batches instead of one
-          at a time. Batch Zero is the first group to go through it. Here&apos;s what it actually is,
-          straight from ERCOT&apos;s own filings.
+          ERCOT is the first grid operator in the country to approve Large Loads in batches instead of one
+          at a time. Batch Zero is the first Large-Load Integration instance under that process. It is not
+          a Clearance and not a context of its own. Here&apos;s what the filings actually say.
         </p>
       </section>
 

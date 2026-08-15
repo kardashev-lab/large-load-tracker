@@ -30,9 +30,18 @@ export type ZoneCardData = {
   stressPctOver100: number | null;
   stressPctNegative: number | null;
   stressMonths: number;
-  grade: string;
-  gradeInputs: { label: string; rank: number; of: number }[];
+  mark: string;
+  markInputs: { label: string; rank: number; of: number }[];
 };
+
+export function geographyLine(meta: ZoneMeta): string {
+  const bits = [`CDR Zone ${meta.label}`];
+  if (meta.loadKey) bits.push(`LLWG Split ${meta.loadKey.replace("lz_", "")}`);
+  else bits.push("no own LLWG Split (lumped into Other)");
+  if (meta.lmpZone) bits.push(`Settlement Zone ${meta.lmpZone}`);
+  else bits.push("no Settlement Zone LMP series");
+  return bits.join(" · ");
+}
 
 function findTimeline(
   timelines: GisTimeline[],
@@ -126,10 +135,10 @@ export function buildZoneCards(
     if (stressRanks[i] != null) inputs.push({ label: "price stress", rank: stressRanks[i]!, of: n });
 
     const avgRank = inputs.length ? inputs.reduce((s, x) => s + x.rank, 0) / inputs.length : n;
-    const grade = letterFromScore(avgRank, n);
+    const mark = letterFromScore(avgRank, n);
 
     const { _stressIndex, ...rest } = r;
     void _stressIndex;
-    return { ...rest, grade, gradeInputs: inputs };
+    return { ...rest, mark, markInputs: inputs };
   });
 }

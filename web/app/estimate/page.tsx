@@ -5,9 +5,9 @@ import { fetchLargeLoadHistory, fetchLargeLoadLatest, fetchGisTimelines } from "
 import { EstimateForm } from "@/components/EstimateForm";
 
 export const metadata: Metadata = {
-  title: "Estimate | ERCOT Large Load Tracker",
+  title: "Line Ahead | ERCOT Large Load Tracker",
   description:
-    "Ahead of you in line: current queue depth, historical approval throughput, and measured generator-side timelines for a large-load project in ERCOT.",
+    "Line Ahead: descriptive arithmetic from Filing Observations and measured Full Process. Not a forecast, not a Clearance, not a time-to-power promise.",
 };
 
 export default async function EstimatePage() {
@@ -24,12 +24,13 @@ export default async function EstimatePage() {
   return (
     <>
       <section className="hero">
-        <span className="eyebrow">Estimate</span>
-        <h1 className="hero-title">Ahead of you in line</h1>
+        <span className="eyebrow">Line Ahead</span>
+        <h1 className="hero-title">Descriptive arithmetic, not a forecast</h1>
         <p className="hero-desc">
-          Pick your zone, size, and load type. We&apos;ll do simple math on real ERCOT numbers: how many
-          projects are ahead of you, how fast ERCOT has been approving loads, and how long similar
-          projects have taken. Not a forecast. Not a promise.
+          Pick an LLWG Split, size, and Large Load type. The math uses Filing Observation queue
+          depth, system-wide approval pace (ERCOT does not publish zone-level approvals), and
+          measured Full Process on the generation side. Not a forecast. Not a Clearance. Not a
+          time-to-power promise.
         </p>
       </section>
 

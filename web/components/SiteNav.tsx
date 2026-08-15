@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV = [
-  { href: "/estimate", label: "Estimate", hint: "How long for MY project?" },
+  { href: "/estimate", label: "Line Ahead", hint: "Arithmetic from Filing Observations" },
   { href: "/zones", label: "Zones", hint: "Where's easiest to build" },
   { href: "/batch-zero", label: "Batch Zero", hint: "New ERCOT rule, explained" },
   { href: "/report", label: "Report", hint: "What changed this month" },
