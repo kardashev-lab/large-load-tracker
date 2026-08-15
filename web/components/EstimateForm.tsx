@@ -70,7 +70,7 @@ export function EstimateForm({
 
         <div className="estimate-field">
           <label className="estimate-label" htmlFor="mw">
-            Project size (MW)
+            Stated MW
           </label>
           <input
             id="mw"
@@ -161,7 +161,7 @@ export function EstimateForm({
 
           {sizePct && (
             <div className="estimate-result-row">
-              <span className="zone-stat-label">Your project size vs. queue</span>
+              <span className="zone-stat-label">This MW vs the Large-Load Queue</span>
               <span className="zone-stat-value mono">
                 {mw} MW falls in the {sizePct.bucketLabel} bucket ({sizePct.countInBucket} of {sizePct.totalCount}{" "}
                 tracked projects)

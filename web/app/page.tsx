@@ -151,7 +151,7 @@ export default async function HomePage() {
             <div className="hero-copy">
               <span className="eyebrow">ERCOT · Updated monthly</span>
               <h1 className="hero-title">
-                Can this site get power in ERCOT, and <span className="amber">roughly when?</span>
+                What do Filing Observations say about Large Load in ERCOT?
               </h1>
               <p className="hero-desc">
                 We track ERCOT&apos;s data center, crypto, and industrial power queue back to{" "}
@@ -161,7 +161,7 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats">
               <div className="hero-stat">
-                <span className="stat-label">Tracked load</span>
+                <span className="stat-label">Large-Load Queue</span>
                 <span className="hero-stat-value">{formatMW(latest.total_mw)}</span>
               </div>
               <div className="hero-stat">
@@ -183,12 +183,12 @@ export default async function HomePage() {
         <div className="start-here-text">
           <div className="start-here-label">New here?</div>
           <div className="start-here-desc">
-            No jargon required. Tell us your project&apos;s size and location. We&apos;ll show you where it
-            stands.
+            Line Ahead is arithmetic on Filing Observations: size, LLWG Split, and type. Not a
+            time-to-power promise.
           </div>
         </div>
         <Link href="/estimate" className="start-here-cta">
-          Estimate my project →
+          Line Ahead →
         </Link>
       </div>
 
@@ -285,7 +285,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="section-head">
           <div>
-            <h2 className="section-title">By project size</h2>
+            <h2 className="section-title">By MW size bucket</h2>
             <div className="section-desc">Latest snapshot, {formatDate(latest.snapshot_month)}.</div>
           </div>
         </div>

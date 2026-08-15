@@ -70,7 +70,7 @@ export function ZoneCard({ data, months }: { data: ZoneCardData; months: ZoneSta
         </span>
       </div>
       <div className="zone-stat-row">
-        <span className="zone-stat-label">Years to clear at current pace</span>
+        <span className="zone-stat-label">Years of generation-side pending MW at this CDR Zone&apos;s throughput</span>
         <span className="zone-stat-value mono">
           {data.yearsToClearBacklog != null ? `${data.yearsToClearBacklog.toFixed(0)} yr` : "—"}
         </span>
